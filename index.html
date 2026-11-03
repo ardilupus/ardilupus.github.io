@@ -143,6 +143,11 @@ svg text{font-family:var(--mono)}
 .xl>div{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr .7fr}
 .xl span{padding:6px;border-right:1px solid var(--rule);font-variant-numeric:tabular-nums}
 .xl .xh{background:var(--ok);color:var(--bg);font-weight:500}
+.ptable{display:grid;border:1px solid var(--rule);border-radius:8px;overflow:hidden;font-size:.86rem}
+.ptable>div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;padding:8px 12px;border-bottom:1px solid var(--rule)}
+.ptable>div:last-child{border-bottom:0}
+.ptable span{color:var(--muted);font:400 .78rem var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.ptable b{font-weight:600}
 .batches{display:grid;grid-template-columns:repeat(40,minmax(0,1fr));gap:2px;margin-top:12px}
 .batches i{display:block;aspect-ratio:1;border-radius:2px;background:var(--rule)}
 .batches i.on{background:var(--accent)}
@@ -412,6 +417,42 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
 
   <article class="case">
     <div class="txt">
+      <p class="lbl">IA generativa · Delta Air Lines (BSSC)</p>
+      <h3>Fotos con IA para todo el equipo del Service Center</h3>
+      <p>Cuando la generación de imágenes con IA todavía no era común, propusimos un regalo para el equipo: cada persona se tomaba una foto y un modelo la ubicaba en uno de tres escenarios de Bogotá. Participé casi como líder del proyecto.</p>
+      <ul>
+        <li>Investigué las opciones y elegí el modelo: Nano Banana, de Google.</li>
+        <li>Diseñé el prompt predefinido para que todas las fotos salieran con el mismo estilo y la persona se reconociera.</li>
+        <li>Definí con el equipo de ingeniería cómo el prompt quedaba fijo en el backend: cada foto se enviaba con ese prompt, sin reescribirlo ni gastar tokens de más.</li>
+      </ul>
+      <p class="value"><b>Resultado:</b> cerca de 200 personas recibieron su foto, y la gran mayoría salió muy bien.</p>
+    </div>
+    <div class="inst">
+      <h3>Cómo funcionaba <span class="tagd">ejemplo</span></h3>
+      <p class="sub">Elija un escenario</p>
+      <div class="tabs" role="group" aria-label="Escenarios" id="ph-tabs">
+        <button type="button" data-i="0" aria-pressed="true">Service Center</button>
+        <button type="button" data-i="1" aria-pressed="false">Plaza de Bolívar</button>
+        <button type="button" data-i="2" aria-pressed="false">La Candelaria</button>
+      </div>
+      <ol class="flow" aria-label="Flujo de generación" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <li><b>Foto</b><span>la persona se toma una foto</span></li>
+        <li class="db"><b>Prompt fijo</b><span id="ph-prompt">guardado en el backend</span></li>
+        <li><b>Nano Banana</b><span>genera la imagen</span></li>
+        <li class="hot"><b>Regalo</b><span id="ph-out">la persona en el escenario</span></li>
+      </ol>
+      <div class="ptable" role="table" aria-label="Datos del proyecto" style="margin-top:16px">
+        <div role="row"><span>Participantes</span><b>≈ 200 personas</b></div>
+        <div role="row"><span>Escenarios</span><b>Service Center, Plaza de Bolívar, La Candelaria</b></div>
+        <div role="row"><span>Modelo</span><b>Nano Banana (Google)</b></div>
+        <div role="row"><span>Mi rol</span><b>Investigación, elección del modelo, prompt y diseño del backend</b></div>
+        <div role="row"><span>Control de costo</span><b>Prompt fijo en el backend, sin reescritura por foto</b></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
       <p class="lbl">Redes sociales · Asylum marketing</p>
       <h3>Extractor de comentarios con análisis agéntico</h3>
       <p>Un scraper en Playwright que, a partir de la URL, extrae comentarios, respuestas, likes y métricas públicas de posts y reels de Instagram, incluidos los comentarios que llegan desde Facebook. Guarda todo como documentos JSON (NoSQL) para analizarlos por periodo.</p>
@@ -538,6 +579,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>App de Power Apps con 1,2 millones de bancos cargados por lotes con Power Automate.</li>
         <li>Automatización de estructuras SAP (FB60) y flujos ETL críticos: hasta 95% menos tiempo operativo; 45 intentos de fraude detectados a tiempo.</li>
         <li>Análisis de sentimiento de más de 20.000 comentarios de catering con un ensamble de 5 modelos.</li>
+        <li>Fotos con IA para cerca de 200 personas del Service Center: elección del modelo (Nano Banana), prompt predefinido y diseño del backend para controlar el consumo de tokens.</li>
       </ul>
       <p class="tech">Python · SAP HANA · Power BI · Power Apps · Power Automate · LangChain · NLP</p>
     </div></div>
@@ -895,6 +937,15 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   document.querySelectorAll('#bx-tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.k))); show('a');
 })();
 
+
+/* AI photos */
+(function(){
+  const S=[['oficina del Service Center','la persona en el Service Center'],['Plaza de Bolívar','la persona en la Plaza de Bolívar'],['calles de La Candelaria','la persona en La Candelaria']];
+  const b=[...document.querySelectorAll('#ph-tabs button')];
+  const show=i=>{b.forEach((x,j)=>x.setAttribute('aria-pressed',j===i)); document.getElementById('ph-prompt').textContent='mismo estilo, escenario: '+S[i][0]; document.getElementById('ph-out').textContent=S[i][1];};
+  b.forEach((x,i)=>x.addEventListener('click',()=>show(i))); show(0);
+})();
+
 /* time index */
 (function(){
   const data=[{k:'Antes de automatizar',v:100},{k:'Después de automatizar',v:5}];
@@ -910,7 +961,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   const now=new Date(2026,10,1);
   const J=[
     {id:'j-asylum',t:'Business Analyst – BI',o:'Asylum marketing',a:new Date(2026,6,1),b:now,k:'Empleo',d:['BI para Novo Nordisk, Rimax y Rayovac','Migración de dashboards a Snowflake','Gobernanza de datos y proyecciones']},
-    {id:'j-delta',t:'Analista de Datos',o:'BSSC · Delta Air Lines',a:new Date(2025,3,1),b:new Date(2026,2,31),k:'Empleo',d:['Validación multinivel: 200+ casos diarios','App de 1,2 millones de bancos','45 intentos de fraude detectados a tiempo']},
+    {id:'j-delta',t:'Analista de Datos',o:'BSSC · Delta Air Lines',a:new Date(2025,3,1),b:new Date(2026,2,31),k:'Empleo',d:['Validación multinivel: 200+ casos diarios','App de 1,2 millones de bancos','45 intentos de fraude detectados a tiempo','Fotos con IA para 200 personas']},
     {id:'j-agente',t:'Agente de búsqueda de empleo',o:'Proyecto propio',a:new Date(2025,2,1),b:now,k:'Proyecto',d:['5 fuentes, puntaje y alertas por Telegram','7.600+ ofertas filtradas']},
     {id:'j-scraper',t:'Extractor de comentarios',o:'Proyecto propio',a:new Date(2026,0,1),b:now,k:'Proyecto',d:['Playwright, JSON y análisis agéntico']},
     {id:'j-tfm',t:'Investigador · TFM',o:'UNIR',a:new Date(2024,0,1),b:new Date(2024,8,30),k:'Proyecto',d:['Ranking de delanteros en tres ligas europeas']},
@@ -948,7 +999,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   const N=[];const L=[];
   const add=(id,g,hub,c)=>N.push({id,g,hub:!!hub,c:c||g});
   const ln=(s,...ts)=>ts.forEach(t=>L.push({source:s,target:t}));
-  ['Agricultura','Tesorería aeronáutica','Sentimiento catering','Agente de empleo','Extractor de comentarios','Ranking TFM','BI'].forEach(x=>add(x,'p',1));
+  ['Agricultura','Tesorería aeronáutica','Fotos con IA','Sentimiento catering','Agente de empleo','Extractor de comentarios','Ranking TFM','BI'].forEach(x=>add(x,'p',1));
   add('SQL','d',1); add('NoSQL','d',1,'n'); add('Visualización','v',1); add('Automatización','a',1); add('Machine Learning','i',1,'ml'); add('Deep Learning','i',1,'dl'); add('IA generativa','i',1); add('Gobernanza de datos','g',1);
   ['Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia','Snowflake','SAP HANA','SQL Server'].forEach(x=>add(x,'d'));
   ['MongoDB','JSON','Cassandra','Neo4j (grafos)'].forEach(x=>add(x,'d',0,'n'));
@@ -956,14 +1007,15 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   ['Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'].forEach(x=>add(x,'a'));
   ['Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'].forEach(x=>add(x,'i',0,'ml'));
   ['Redes neuronales','Visión por computadora','Autoencoders variacionales'].forEach(x=>add(x,'i',0,'dl'));
-  ['LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea'].forEach(x=>add(x,'i'));
+  ['LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea','Generación de imágenes','Ingeniería de prompts'].forEach(x=>add(x,'i'));
   ln('SQL','Modelo relacional','Snowflake','SAP HANA','SQL Server'); ln('Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia');
   ln('NoSQL','MongoDB','JSON','Cassandra','Neo4j (grafos)'); ln('MongoDB','JSON'); ln('Neo4j (grafos)','JSON');
   ln('Visualización','Power BI','Tableau','Looker','Adobe Analytics','D3.js','Streamlit','SCImago Graphica');
   ln('Automatización','Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'); ln('Power Apps','Power Automate');
   ln('Machine Learning','Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'); ln('Árboles de decisión','Random Forest');
   ln('Deep Learning','Redes neuronales','Visión por computadora','Autoencoders variacionales'); ln('Machine Learning','Deep Learning'); ln('Deep Learning','IA generativa');
-  ln('IA generativa','LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea'); ln('RAG','Embeddings'); ln('Orquestadores','LangChain');
+  ln('IA generativa','LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea','Generación de imágenes','Ingeniería de prompts');
+  ln('Fotos con IA','Generación de imágenes','Ingeniería de prompts','LLMs en línea'); ln('RAG','Embeddings'); ln('Orquestadores','LangChain');
   ln('Gobernanza de datos','SQL','NoSQL');
   ln('Agricultura','Python','SQL','Telegram API');
   ln('Tesorería aeronáutica','Python','SAP HANA','Power Automate','Power Apps','Power BI','Gobernanza de datos');
