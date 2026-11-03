@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andrés Ardila</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Andrés Ardila: analista de datos, BI, automatización e IA generativa en Bogotá. Resuelvo problemas que no sabes que tienes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a field notebook of cases. Hero with photo and signal line; each case = claim on the left, live instrument on the right. */
+:root{
+  --bg:#f5f6f9; --surface:#ffffff; --ink:#171c2e; --muted:#535a70; --rule:#dadde7;
+  --accent:#4a3c9c; --accent-soft:#e8e5f6; --alert:#c2410c; --alert-soft:#fbe7dc; --ok:#1f7a55;
+  --s2:#2f7f9a; --s3:#b0832a; --s4:#8a4f7d;
+  --display:"Schibsted Grotesk","Segoe UI",system-ui,sans-serif;
+  --body:"Public Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10121c; --surface:#181b29; --ink:#e7e8f0; --muted:#a2a7bd; --rule:#2c3044;
+  --accent:#a99cf2; --accent-soft:#2a2550; --alert:#ff9a62; --alert-soft:#3a2216; --ok:#5fd2a0;
+  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10121c; --surface:#181b29; --ink:#e7e8f0; --muted:#a2a7bd; --rule:#2c3044;
+  --accent:#a99cf2; --accent-soft:#2a2550; --alert:#ff9a62; --alert-soft:#3a2216; --ok:#5fd2a0;
+  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16.5px/1.62 var(--body);margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.3rem,5.6vw,4.2rem);font-weight:800;letter-spacing:-.025em}
+h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:800;letter-spacing:-.015em}
+h3{font-size:1.12rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+.lbl{font:500 .74rem/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+nav.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:20px}
+nav.top .me{font:700 1.05rem var(--display)}
+nav.top ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav.top a{color:var(--muted);text-decoration:none;font-size:.95rem}
+nav.top a:hover{color:var(--ink)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--alert);outline-offset:2px}
+
+.hero{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;padding-block:40px 28px}
+.hero img{width:148px;height:148px;border-radius:50%;border:3px solid var(--accent);background:var(--accent-soft)}
+.hero .role{font:500 1.05rem var(--body);color:var(--muted);margin-top:12px}
+.hero .lead{max-width:40em;margin-top:18px;font-size:1.12rem}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:7px;font:600 .95rem var(--body);text-decoration:none;border:1.5px solid var(--rule);color:var(--ink);background:var(--surface);cursor:pointer}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+#signal{width:100%;height:56px;display:block;margin-top:8px}
+
+.stats{display:flex;flex-wrap:wrap;gap:10px;padding-block:8px 20px}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:8px 16px;font-size:.92rem}
+.stat b{font:700 1rem var(--mono);color:var(--accent);margin-right:6px;font-variant-numeric:tabular-nums}
+
+.profile{margin-bottom:36px;background:var(--surface);border:1px solid var(--rule);border-radius:12px}
+.profile summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;font:700 1.05rem var(--display)}
+.profile summary::-webkit-details-marker{display:none}
+.profile summary span.t{font:500 .82rem var(--mono);color:var(--accent);white-space:nowrap}
+.profile[open] summary span.t::after{content:" ▲"} .profile:not([open]) summary span.t::after{content:" ▼"}
+.profile .in{padding:0 20px 20px;display:grid;gap:12px;max-width:62em}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills span{font:500 .8rem var(--mono);padding:5px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+
+section{padding-block:56px;border-top:1px solid var(--rule)}
+.shead{max-width:44em;display:grid;gap:10px;margin-bottom:28px}
+.disc{display:inline-flex;gap:8px;flex-wrap:wrap;font:500 .8rem var(--mono)}
+.disc span{padding:4px 10px;border-radius:999px;border:1px solid var(--rule)}
+.disc span.real{border-color:var(--ok);color:var(--ok)}
+.case{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:36px;align-items:start;padding-block:28px}
+.case+.case{border-top:1px dashed var(--rule)}
+.case .txt{display:grid;gap:12px}
+.case .txt ul{margin:0;padding-left:1.1em;color:var(--muted)}
+.case .txt li{margin-bottom:4px}
+.value{background:var(--accent-soft);border-radius:8px;padding:12px 14px;font-size:.97rem}
+.value b{color:var(--accent)}
+.insight{border:1.5px solid var(--alert);border-radius:8px;padding:12px 14px;font-size:.95rem}
+.insight b{color:var(--alert)}
+.inst{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px;min-width:0}
+.inst h3{font-size:1rem}
+.inst .sub{font:400 .78rem var(--mono);color:var(--muted);margin-top:4px}
+.tagd{font:500 .68rem var(--mono);padding:2px 8px;border-radius:999px;border:1px solid var(--rule);color:var(--muted);vertical-align:middle;margin-left:6px;white-space:nowrap}
+.tagd.real{border-color:var(--ok);color:var(--ok)}
+.ctrl{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-top:12px;font-size:.92rem}
+.ctrl label{display:flex;align-items:center;gap:8px}
+.ctrl input[type=range]{width:150px;accent-color:var(--accent)}
+.ctrl output{font:500 .9rem var(--mono);font-variant-numeric:tabular-nums;min-width:4ch}
+.ctrl input[type=checkbox]{accent-color:var(--accent);width:16px;height:16px}
+.ctrl select{font:500 .9rem var(--body);padding:6px 8px;border-radius:6px;border:1.5px solid var(--rule);background:var(--surface);color:var(--ink)}
+.readout{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.ro{border:1px solid var(--rule);border-radius:8px;padding:8px 12px;min-width:0}
+.ro small{display:block;font:400 .72rem var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ro span{font:700 1.15rem var(--mono);font-variant-numeric:tabular-nums}
+.ro.alert span{color:var(--alert)}
+svg text{font-family:var(--mono)}
+.chart{width:100%;height:auto;display:block;margin-top:10px}
+.note{font:400 .74rem var(--mono);color:var(--muted);margin-top:10px}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tabs button{font:500 .85rem var(--body);padding:7px 12px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.quote{font:500 1.05rem/1.45 var(--body);margin-top:14px;padding-left:12px;border-left:3px solid var(--accent)}
+.votes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:14px}
+.vote{border:1px solid var(--rule);border-radius:8px;padding:8px 6px;text-align:center;font-size:.78rem;min-width:0}
+.vote i{display:block;font:500 .7rem var(--mono);color:var(--muted);font-style:normal;margin-bottom:4px}
+.vote b{font-weight:600}
+.pos{color:var(--ok)} .neg{color:var(--alert)} .neu{color:var(--muted)}
+.verdict{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--bg);font-size:.92rem}
+.verdict.esc{background:var(--alert-soft)}
+.parts{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:6px}
+.parts li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--rule);padding-bottom:6px;font-size:.92rem}
+.parts li span:last-child{font:500 .82rem var(--mono)}
+
+/* bank app simulator */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:14px;counter-reset:st}
+.step{border:1px solid var(--rule);border-radius:8px;padding:8px;font-size:.8rem;min-width:0}
+.step::before{counter-increment:st;content:"Paso " counter(st);display:block;font:500 .66rem var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.step b{display:block;font-size:.82rem;margin-bottom:4px}
+.step.hot{border-color:var(--accent);background:var(--accent-soft)}
+.iban{font:500 1rem var(--mono);letter-spacing:.06em;margin-top:12px;word-break:break-all}
+.iban mark{background:var(--accent);color:var(--bg);border-radius:3px;padding:0 1px}
+.batches{display:grid;grid-template-columns:repeat(40,minmax(0,1fr));gap:2px;margin-top:12px}
+.batches i{display:block;aspect-ratio:1;border-radius:2px;background:var(--rule)}
+.batches i.on{background:var(--accent)}
+.batches i.cut{background:var(--alert)}
+
+.graphwrap{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px;margin-top:28px;overflow-x:auto}
+#graph{display:block;width:100%;min-width:640px;height:auto}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font:400 .78rem var(--mono);color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+.tlwrap{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px;margin-bottom:24px;overflow-x:auto}
+#tlexp{display:block;width:100%;min-width:640px;height:auto}
+.tldetail{margin-top:12px;padding-top:12px;border-top:1px solid var(--rule);display:grid;gap:6px}
+.tldetail .org{color:var(--accent);font-weight:600}
+.tldetail ul{margin:4px 0 0;padding-left:1.1em}
+
+.job{display:grid;grid-template-columns:170px minmax(0,1fr);gap:24px;padding-block:20px;border-bottom:1px solid var(--rule)}
+.job .when{font:500 .85rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.job h3{margin-bottom:2px}
+.job .org{color:var(--accent);font-weight:600;font-size:.95rem}
+.job ul{margin:10px 0 0;padding-left:1.1em}
+.job li{margin-bottom:4px}
+.job .tech{font:400 .8rem var(--mono);color:var(--muted);margin-top:8px}
+.job:target{background:var(--accent-soft)}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.skills>div{min-width:0}
+.skills h3{font-size:1rem;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font:500 .8rem var(--mono);background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:4px 8px}
+
+.eduwrap{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px;overflow-x:auto}
+#tledu{display:block;width:100%;min-width:560px;height:auto}
+
+.contact{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:end}
+.contact .mail{font:500 clamp(1.1rem,2.6vw,1.6rem) var(--mono);user-select:all;word-break:break-all}
+.cinfo{display:grid;gap:4px;margin-top:14px}
+.cinfo p{font:400 .95rem var(--mono)}
+footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--rule)}
+
+@media (max-width:860px){
+  .case{grid-template-columns:1fr;gap:20px}
+  .job{grid-template-columns:1fr;gap:4px}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .hero{grid-template-columns:1fr;gap:20px}
+  .hero img{width:112px;height:112px}
+  .votes{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .batches{grid-template-columns:repeat(24,minmax(0,1fr))}
+  nav.top ul{gap:12px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<nav class="top" aria-label="Secciones">
+  <span class="me">Andrés Ardila</span>
+  <ul>
+    <li><a href="#casos">Casos</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#formacion">Formación</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <img src="data:image/webp;base64,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" alt="Foto de Andrés Ardila">
+  <div>
+    <p class="lbl">Datos · BI · Automatización · IA generativa</p>
+    <h1 style="margin-top:10px">Detecto el problema antes de que cueste.</h1>
+    <p class="role">Andrés Mauricio Ardila Fajardo · Business Analyst y analista de datos · Bogotá</p>
+    <p class="lead">Ingeniero y MSc. en Visual Analytics y Big Data. Construyo pipelines, tableros y sistemas de IA que encuentran anomalías a tiempo: en un cultivo, en una tesorería o en miles de comentarios de clientes.</p>
+    <div class="links">
+      <a class="btn pri" href="#casos">Ver casos</a>
+      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+<svg id="signal" viewBox="0 0 1120 56" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+<div class="stats" aria-label="Cifras de mi trabajo">
+  <span class="stat"><b>45</b>intentos de fraude detectados a tiempo</span>
+  <span class="stat"><b>1,2M</b>bancos en una app de Power Apps</span>
+  <span class="stat"><b>95%</b>menos tiempo operativo en tesorería</span>
+  <span class="stat"><b>200+</b>casos diarios validados</span>
+  <span class="stat"><b>20.000+</b>comentarios analizados</span>
+  <span class="stat"><b>7.600+</b>ofertas filtradas por mi agente</span>
+  <span class="stat"><b>150+</b>servidores públicos y particulares formados</span>
+</div>
+
+<details class="profile" id="perfil">
+  <summary>Perfil profesional <span class="t">Ver perfil</span></summary>
+  <div class="in">
+    <p>Ingeniero y analista de datos con MSc. en Análisis y Visualización de Datos Masivos (Visual Analytics &amp; Big Data), especializado en inteligencia de negocios, automatización, calidad de datos y optimización de procesos en entornos corporativos de alto volumen transaccional y en marketing para marcas multinacionales. Hago de puente entre áreas operativas, equipos de ingeniería y clientes para generar mejoras medibles y sostenibles.</p>
+    <p>Más de 3 años diseñando pipelines de automatización y procesos ETL en Python: validación, transformación y control de más de 1 millón de registros bancarios, lógicas de integridad multinivel en SAP HANA y flujos con Power Platform para operaciones globales con reglas bancarias de más de 50 países.</p>
+    <p>Hoy, como Business Analyst de BI, migro dashboards a Snowflake, diseño modelos de gobernanza de datos y relacionales, y construyo proyecciones estadísticas para marcas como Novo Nordisk, Rimax y Rayovac. Desarrollo soluciones de IA generativa con LangChain, RAG y embeddings, orquestando hasta 8 modelos de lenguaje locales (Ollama) y vía API (Gemini, OpenAI, Claude).</p>
+    <p><b>Datos estructurados y no estructurados.</b> Trabajo con modelos relacionales (estrella y copo de nieve) y con bases NoSQL: documentos JSON en MongoDB para comentarios y ofertas de empleo, y grafos en Neo4j.</p>
+    <div class="pills"><span>Python avanzado</span><span>SQL y Snowflake</span><span>NoSQL · MongoDB · JSON</span><span>Neo4j</span><span>LangChain · RAG</span><span>Power Platform</span><span>Gobierno del dato</span><span>Visualización D3</span></div>
+  </div>
+</details>
+
+<section id="casos">
+  <div class="shead">
+    <p class="lbl">Valor para el negocio</p>
+    <h2>Lo que importa no es el tiempo ahorrado, sino lo que se alcanza a salvar.</h2>
+    <p class="muted">Cada caso tiene un instrumento interactivo para que vea cómo funciona.</p>
+    <p class="disc"><span class="real">Casos 100% reales</span><span>Gráficas con datos simulados, salvo donde dice «datos reales»</span></p>
+  </div>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Agricultura · CVR Ingeniería</p>
+      <h3>Alerta temprana en un cultivo de arándanos</h3>
+      <p>Sensores en lisímetros, suelo y caseta medían pH y conductividad de cada válvula de riego. Diseñé la base de datos y automaticé el análisis en Python: cuando una válvula salía de su rango normal, el sistema enviaba un correo y un mensaje de Telegram.</p>
+      <ul>
+        <li>Si la conductividad se pierde, la planta tarda unos dos meses en recuperarse.</li>
+        <li>Cada planta produce cerca de 4 kg y cada cama tiene más de 100 plantas.</li>
+        <li>Detectar el cambio el primer día, y no en la siguiente visita, protege la cosecha de toda la cama.</li>
+      </ul>
+      <p class="value"><b>Resultado:</b> optimización del rendimiento del cultivo en 85%.</p>
+    </div>
+    <div class="inst">
+      <h3>Conductividad eléctrica diaria de una válvula (mS/cm) <span class="tagd">simulado</span></h3>
+      <p class="sub">Arrastre en la franja de abajo para elegir el periodo que quiere ver</p>
+      <svg id="ce" class="chart" viewBox="0 0 560 300" role="img" aria-label="Conductividad diaria con selector de periodo"></svg>
+      <div class="ctrl">
+        <label for="beds">Camas afectadas <input id="beds" type="range" min="1" max="20" step="1" value="3"><output id="bedsv">3</output></label>
+      </div>
+      <div class="readout">
+        <div class="ro"><small>Periodo</small><span id="per">—</span></div>
+        <div class="ro alert"><small>Primera alerta</small><span id="first">—</span></div>
+        <div class="ro"><small>Días fuera de rango</small><span id="over">—</span></div>
+        <div class="ro"><small>Producción protegida</small><span id="kg">—</span></div>
+      </div>
+      <p class="note">Umbral de alerta: 1,60 mS/cm. Producción = camas × 100 plantas × 4 kg.</p>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Tesorería · Delta Air Lines (BSSC)</p>
+      <h3>Detección temprana de intentos de fraude en reembolsos</h3>
+      <p>Construí en Python un motor de validación multinivel para los casos de Customer Care, Baggage y Refunds: validación bancaria, validación del documento de identidad y reglas por país. Corría a diario de forma automática y detenía las solicitudes sospechosas antes del pago, no después.</p>
+      <ul>
+        <li>Más de 200 casos diarios procesados en promedio.</li>
+        <li>Más de 70% menos tiempo en el cuello de botella de validación de casos.</li>
+        <li>Más de 1 millón de registros transaccionales validados con reglas bancarias de más de 50 países.</li>
+      </ul>
+      <p class="value"><b>Resultado:</b> 45 intentos de fraude detectados a tiempo y hasta 95% menos tiempo operativo.</p>
+    </div>
+    <div class="inst">
+      <h3>Puntaje de riesgo por solicitud de reembolso, 30 días <span class="tagd">simulado</span></h3>
+      <p class="sub">Active reglas: las solicitudes con puntaje de 60 o más se detienen para revisión</p>
+      <svg id="fr" class="chart" viewBox="0 0 560 250" role="img" aria-label="Solicitudes de reembolso por puntaje de riesgo"></svg>
+      <div class="ctrl">
+        <label for="r1"><input id="r1" type="checkbox" checked> Cuenta bancaria inválida o nueva</label>
+        <label for="r2"><input id="r2" type="checkbox" checked> Documento no coincide</label>
+        <label for="r3"><input id="r3" type="checkbox" checked> Solicitud duplicada o atípica</label>
+      </div>
+      <div class="readout">
+        <div class="ro"><small>Solicitudes revisadas</small><span id="ftot">400</span></div>
+        <div class="ro alert"><small>Detenidas antes del pago</small><span id="fhold">0</span></div>
+        <div class="ro"><small>Intentos simulados detectados</small><span id="fcatch">0</span></div>
+      </div>
+      <p class="note">12 intentos de fraude plantados en datos simulados. No se muestran montos ni datos reales.</p>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Tesorería · Delta Air Lines (BSSC)</p>
+      <h3>1,2 millones de bancos en una app de Power Apps</h3>
+      <p>Los bancos vivían en SAP y el equipo los buscaba en archivos de Excel con macros, donde un dígito mal escrito dañaba un pago. Diseñé y lideré el reemplazo: Python descarga los bancos de SAP, Power Automate los carga y una app de Power Apps guía la búsqueda.</p>
+      <ul>
+        <li>Power Apps no carga más de 5.000 registros a la vez: Power Automate los sube por lotes con paginación y validaciones, y parte en bloques para no superar el límite de 100.000 que generaba rechazos.</li>
+        <li>Cuatro regiones (EMEA, LATAM, APAC e India), cada país con sus campos obligatorios y su forma de identificar el banco.</li>
+        <li>Cada mes, Python compara SAP con la lista, alerta los bancos nuevos y genera un archivo de importación con solo esos cambios.</li>
+        <li>Los usuarios tienen acceso de solo lectura: filtran y buscan, pero no pueden editar ni borrar bancos.</li>
+      </ul>
+      <p class="value"><b>Resultado:</b> se eliminaron el Excel y sus errores de dígitos, y la búsqueda del banco correcto pasó a tomar segundos.</p>
+    </div>
+    <div class="inst">
+      <h3>Cómo la app identifica el banco en cada país <span class="tagd">ejemplo</span></h3>
+      <p class="sub">Elija un país</p>
+      <div class="tabs" role="group" aria-label="Países" id="bk-tabs">
+        <button type="button" data-k="co" aria-pressed="true">Colombia</button>
+        <button type="button" data-k="br" aria-pressed="false">Brasil</button>
+        <button type="button" data-k="fr" aria-pressed="false">Francia</button>
+        <button type="button" data-k="jp" aria-pressed="false">Japón</button>
+        <button type="button" data-k="cn" aria-pressed="false">China</button>
+      </div>
+      <div class="steps" id="bk-steps"></div>
+      <div id="bk-extra"></div>
+      <h3 style="margin-top:20px">Carga de 1.200.000 bancos en lotes de 5.000</h3>
+      <p class="sub">Cada cuadro es un lote. En naranja, el corte de cada bloque de 100.000</p>
+      <div class="batches" id="bk-batches" aria-label="240 lotes de carga"></div>
+      <div class="ctrl"><button class="btn" type="button" id="bk-run">Simular la carga</button><output id="bk-count">240 de 240 lotes</output></div>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Experiencia de cliente · Delta Air Lines</p>
+      <h3>Análisis de sentimiento avanzado con un ensamble de modelos</h3>
+      <p>Para más de 20.000 comentarios de catering, cinco modelos preentrenados, orquestados con LangChain, votan por mayoría. Los casos ambiguos (ironía, sarcasmo, empates) pasan a un LLM con reglas estrictas que separa el análisis por frase e ingrediente.</p>
+      <ul>
+        <li>El análisis léxico tradicional clasifica casi todo como neutro.</li>
+        <li>El ensamble dice qué plato falla y por qué. Los más mencionados eran el omelette y el chicken salad sandwich.</li>
+      </ul>
+      <p class="insight"><b>Hallazgo:</b> el chicken salad sandwich recibía quejas por dos razones opuestas: cuando no estaba disponible y cuando sabía insípido. Los comentarios de «insípido» se asociaban con el origen del pollo: el de proveedores latinoamericanos se describía con más sabor que el de España. La receta era la misma; cambiaba el insumo.</p>
+    </div>
+    <div class="inst">
+      <h3>Votos del ensamble por comentario <span class="tagd">ejemplo</span></h3>
+      <p class="sub">Elija un comentario</p>
+      <div class="tabs" role="group" aria-label="Comentarios de ejemplo" id="s-tabs">
+        <button type="button" data-i="0" aria-pressed="true">Mixto</button>
+        <button type="button" data-i="1" aria-pressed="false">Sarcasmo</button>
+        <button type="button" data-i="2" aria-pressed="false">Claro</button>
+      </div>
+      <p class="quote" id="sq"></p>
+      <div class="votes" id="sv"></div>
+      <div class="verdict" id="sd"></div>
+      <ul class="parts" id="sp"></ul>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Automatización · proyecto propio</p>
+      <h3>Agente orquestador de búsqueda de empleo</h3>
+      <p>Un bot en Python con Selenium y BeautifulSoup revisa LinkedIn (público y con sesión), Elempleo, Magneto y Computrabajo en intervalos aleatorios. Filtra por palabras clave en español e inglés, calcula un puntaje por oferta, descarta duplicados del mes y envía las mejores por Telegram, cada perfil a su propio bot.</p>
+      <ul>
+        <li>Siguiente versión: un modelo orquestador con LangChain que compara cada oferta con la hoja de vida usando embeddings.</li>
+        <li>Las ofertas con mejor coincidencia pasan a un agente que dice qué agregar o ajustar en la hoja de vida para esa vacante.</li>
+        <li>Base para una herramienta para reclutadores: leer hojas de vida contra un perfil y preparar preguntas de entrevista.</li>
+      </ul>
+      <p class="value"><b>Valor:</b> ninguna oferta relevante se pierde, y cada postulación sale ajustada a la vacante.</p>
+    </div>
+    <div class="inst">
+      <h3>Ofertas enviadas por Telegram, por mes y portal <span class="tagd real">datos reales</span></h3>
+      <p class="sub">Julio a septiembre el bot estuvo en pausa; octubre va en curso</p>
+      <svg id="jobs" class="chart" viewBox="0 0 560 230" role="img" aria-label="Ofertas enviadas por mes y portal"></svg>
+      <div class="legend" id="jobs-leg"></div>
+      <h3 style="margin-top:20px">Ofertas que pasarían al agente de hoja de vida <span class="tagd">simulado</span></h3>
+      <p class="sub">Mueva el puntaje mínimo de coincidencia (embeddings), sobre las 1.902 ofertas de mayo</p>
+      <svg id="match" class="chart" viewBox="0 0 560 170" role="img" aria-label="Distribución de puntajes de coincidencia"></svg>
+      <div class="ctrl"><label for="mth">Coincidencia mínima <input id="mth" type="range" min="50" max="95" step="1" value="80"><output id="mthv">80%</output></label></div>
+      <div class="readout">
+        <div class="ro"><small>Pasan al agente</small><span id="mpass">—</span></div>
+        <div class="ro"><small>Revisión manual evitada</small><span id="msave">—</span></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Redes sociales · Asylum marketing</p>
+      <h3>Extractor de comentarios con análisis agéntico</h3>
+      <p>Un scraper en Playwright que, a partir de la URL, extrae comentarios, respuestas, likes y métricas públicas de posts y reels de Instagram, incluidos los comentarios que llegan desde Facebook. Guarda todo como documentos JSON (NoSQL) para analizarlos por periodo.</p>
+      <ul>
+        <li>Adapta su paciencia al tamaño del post: de 90 segundos a 15 minutos según los comentarios esperados.</li>
+        <li>Lee contadores como «1,2K» o «234 mil» y ancla cada métrica a su ícono, no a su posición.</li>
+        <li>Un modelo agéntico con Claude evalúa los comentarios del periodo; herramientas como Fanpage Karma marcan casi todo como positivo.</li>
+        <li>Próximo: Facebook y TikTok con el mismo modelo.</li>
+      </ul>
+      <p class="value"><b>Valor:</b> un engagement rate de 10% no dice nada si no se sabe de qué está hecho: elogios, quejas, preguntas o intención de compra.</p>
+    </div>
+    <div class="inst">
+      <h3>Sentimiento de los comentarios de una publicación (%) <span class="tagd">simulado</span></h3>
+      <p class="sub">Herramienta básica frente al modelo agéntico, por semana</p>
+      <div class="tabs" role="group" aria-label="Semanas" id="w-tabs">
+        <button type="button" data-i="0" aria-pressed="true">Semana 1</button>
+        <button type="button" data-i="1" aria-pressed="false">Semana 2</button>
+        <button type="button" data-i="2" aria-pressed="false">Semana 3</button>
+      </div>
+      <svg id="cm" class="chart" viewBox="0 0 560 190" role="img" aria-label="Comparación de clasificación de sentimiento"></svg>
+      <div class="legend" id="cm-leg"></div>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Investigación · Trabajo Fin de Máster, UNIR</p>
+      <h3>Ranking de rendimiento de delanteros en Europa</h3>
+      <p>Hice web scraping de FBref para todos los jugadores de las ligas de España, Italia e Inglaterra, elegidas por el ranking de ligas europeas, en las temporadas 2021-2022 y 2022-2023. Tras un análisis exploratorio de más de 100 campos, quité lo que no dice nada de un delantero (como saques de banda) y separé por tipo: 9 de punta, segunda punta, extremos y mediapunta.</p>
+      <ul>
+        <li>Puntaje con pesos propios: goles, asistencias, regates, creación de tiros, pases progresivos, tarjetas y más.</li>
+        <li>El modelo coincidió con la realidad: Vinícius y Benzema, primeros en España en 2021-2022, año del Balón de Oro de Benzema; Rafael Leão en el top 10 de Italia el año en que el Milan fue campeón.</li>
+      </ul>
+      <p class="value"><b>Valor:</b> un método reutilizable para detectar talento con datos, no solo con intuición.</p>
+    </div>
+    <div class="inst">
+      <h3>Puntaje de rendimiento de los 10 mejores <span class="tagd real">datos reales</span></h3>
+      <div class="ctrl">
+        <label for="tf-s">Temporada <select id="tf-s"><option>2021-2022</option><option>2022-2023</option></select></label>
+        <label for="tf-l">Liga <select id="tf-l"><option>España</option><option>Italia</option><option>Inglaterra</option><option>Todas</option></select></label>
+      </div>
+      <svg id="tfm" class="chart" viewBox="0 0 560 330" role="img" aria-label="Ranking de rendimiento"></svg>
+      <h3 style="margin-top:16px" id="tf-name">Componentes del puntaje</h3>
+      <p class="sub">Toque un jugador para ver de dónde sale su puntaje</p>
+      <svg id="tfc" class="chart" viewBox="0 0 560 190" role="img" aria-label="Componentes del puntaje"></svg>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Gerencia · IA aplicada</p>
+      <h3>IA para gerentes: dónde da valor y quién decide</h3>
+      <p>Formé a más de 150 personas, entre servidores públicos y particulares, en SQL, ciencia de datos e IA generativa en la ESAP. Hoy orquesto hasta 8 modelos de lenguaje, locales y vía API, para convertir datos no estructurados en decisiones. Con gerentes trabajo tres preguntas: qué proceso tiene retorno medible, qué riesgo de datos trae y qué acciones requieren aprobación humana.</p>
+      <p class="value"><b>Valor:</b> adoptar IA con una métrica de negocio y reglas claras, no por moda.</p>
+    </div>
+    <div class="inst">
+      <h3>Tiempo operativo del proceso de tesorería (índice, antes = 100)</h3>
+      <p class="sub">Resultado de automatizar validaciones y flujos ETL</p>
+      <svg id="tm" class="chart" viewBox="0 0 560 130" role="img" aria-label="El tiempo operativo bajó de 100 a 5"></svg>
+    </div>
+  </article>
+</section>
+
+<section id="experiencia">
+  <div class="shead"><p class="lbl">Experiencia</p><h2>Dónde he trabajado</h2><p class="muted">Toque una barra para ver el detalle.</p></div>
+  <div class="tlwrap">
+    <svg id="tlexp" viewBox="0 0 900 300" role="img" aria-label="Línea de tiempo de experiencia laboral"></svg>
+    <div class="tldetail" id="tl-detail" aria-live="polite"></div>
+  </div>
+  <div class="tl">
+    <div class="job" id="j-asylum"><p class="when">07/2026 – hoy</p><div>
+      <h3>Business Analyst – BI</h3><p class="org">Asylum marketing</p>
+      <ul>
+        <li>Análisis de datos e inteligencia de negocios para Novo Nordisk, Rimax, Rayovac y otras marcas.</li>
+        <li>Migración de dashboards a Snowflake (capas bronce, silver y gold), construidos como código agéntico.</li>
+        <li>Pipelines en Python desde imágenes y desde Adobe Analytics hacia Google Sheets, Excel y Snowflake.</li>
+        <li>Proyección de influencers para Novo Nordisk y proyección anual de Rayovac cruzando Fanpage Karma y Windsor AI.</li>
+        <li>Gobernanza de datos y modelo relacional en estrella para el embudo de médicos de Novo Nordisk.</li>
+      </ul>
+      <p class="tech">Snowflake · Python · Streamlit · SQL · Adobe Customer Journey Analytics · Looker · LLMs</p>
+    </div></div>
+    <div class="job" id="j-delta"><p class="when">04/2025 – 03/2026</p><div>
+      <h3>Analista de Datos</h3><p class="org">Bogotá Shared Service Center, apoyando a Delta Air Lines</p>
+      <ul>
+        <li>Motor de validación multinivel en Python para Customer Care, Baggage y Refunds: más de 200 casos diarios y más de 70% menos tiempo de validación.</li>
+        <li>App de Power Apps con 1,2 millones de bancos cargados por lotes con Power Automate.</li>
+        <li>Automatización de estructuras SAP (FB60) y flujos ETL críticos: hasta 95% menos tiempo operativo; 45 intentos de fraude detectados a tiempo.</li>
+        <li>Análisis de sentimiento de más de 20.000 comentarios de catering con un ensamble de 5 modelos.</li>
+      </ul>
+      <p class="tech">Python · SAP HANA · Power BI · Power Apps · Power Automate · LangChain · NLP</p>
+    </div></div>
+    <div class="job" id="j-agente"><p class="when">03/2025 – hoy</p><div>
+      <h3>Agente orquestador de búsqueda de empleo</h3><p class="org">Proyecto propio</p>
+      <ul><li>Scraping de cinco fuentes, puntaje por oferta, deduplicación y alertas por Telegram; más de 7.600 ofertas filtradas. En camino: matching con embeddings y agente de hoja de vida.</li></ul>
+      <p class="tech">Python · Selenium · BeautifulSoup · LangChain · RAG · Ollama · MongoDB</p>
+    </div></div>
+    <div class="job" id="j-scraper"><p class="when">2026 – hoy</p><div>
+      <h3>Extractor de comentarios con análisis agéntico</h3><p class="org">Proyecto propio, aplicado en Asylum</p>
+      <ul><li>Scraper en Playwright para Instagram (y comentarios de Facebook) con salida JSON y análisis por periodo con LLMs.</li></ul>
+      <p class="tech">Python · Playwright · LangChain · Claude · JSON</p>
+    </div></div>
+    <div class="job" id="j-tfm"><p class="when">01/2024 – 09/2024</p><div>
+      <h3>Investigador – Análisis de rendimiento deportivo</h3><p class="org">Trabajo Fin de Máster, UNIR</p>
+      <ul><li>Ranking de delanteros de las ligas de España, Italia e Inglaterra con scraping de FBref, ETL y modelado estadístico.</li></ul>
+      <p class="tech">Python · SQL Server · Power BI · GitHub</p>
+    </div></div>
+    <div class="job" id="j-esap"><p class="when">2022 – 2023</p><div>
+      <h3>Instructor y creador del curso de Ciencia de Datos</h3><p class="org">ESAP</p>
+      <ul><li>Formación en SQL, ciencia de datos e IA generativa para más de 150 participantes, entre servidores públicos y particulares.</li></ul>
+    </div></div>
+    <div class="job" id="j-cvr"><p class="when">01/2021 – 07/2021</p><div>
+      <h3>Administrador de Bases de Datos</h3><p class="org">CVR Ingeniería · cultivo de arándanos</p>
+      <ul><li>Monitoreo en tiempo real con sensores y alertas por correo y Telegram; rendimiento del cultivo optimizado en 85%.</li></ul>
+    </div></div>
+    <div class="job" id="j-ayc"><p class="when">06/2020 – 12/2020</p><div>
+      <h3>Arquitecto de Datos</h3><p class="org">Asesorías y Cobranzas</p>
+      <ul><li>Arquitectura de base de datos empresarial, optimización de consultas y gobernanza de datos.</li></ul>
+    </div></div>
+  </div>
+</section>
+
+<section id="habilidades">
+  <div class="shead"><p class="lbl">Habilidades</p><h2>Con qué trabajo</h2></div>
+  <div class="skills">
+    <div><h3>Programación y datos</h3><div class="chips"><span>Python avanzado</span><span>Pandas</span><span>NumPy</span><span>DuckDB</span><span>SQL avanzado</span><span>Snowflake</span><span>ETL</span><span>APIs</span></div></div>
+    <div><h3>Datos estructurados y no estructurados</h3><div class="chips"><span>NoSQL</span><span>MongoDB</span><span>JSON</span><span>Neo4j</span><span>Modelo estrella</span><span>Copo de nieve</span><span>Gobierno del dato</span></div></div>
+    <div><h3>Extracción y automatización</h3><div class="chips"><span>Playwright</span><span>Selenium</span><span>BeautifulSoup</span><span>Power Automate</span><span>Power Apps</span><span>SAP HANA</span><span>Telegram API</span></div></div>
+    <div><h3>IA generativa</h3><div class="chips"><span>LangChain</span><span>RAG</span><span>Embeddings</span><span>Ollama</span><span>Gemini</span><span>OpenAI</span><span>Claude</span><span>NLP</span></div></div>
+    <div><h3>Visualización y BI</h3><div class="chips"><span>Power BI</span><span>Tableau</span><span>Looker</span><span>Adobe Analytics</span><span>Streamlit</span><span>D3.js</span></div></div>
+    <div><h3>Análisis</h3><div class="chips"><span>Detección de anomalías</span><span>Control de fraude</span><span>Calidad de datos</span><span>Modelado de KPIs</span><span>Proyecciones estadísticas</span><span>Machine Learning</span><span>Deep Learning</span></div></div>
+  </div>
+  <div class="graphwrap">
+    <h3>Proyectos y tecnologías, como grafo</h3>
+    <p class="sub" style="font:400 .78rem var(--mono);color:var(--muted);margin-top:4px">Pase el cursor o toque un nodo para ver sus conexiones; puede arrastrarlos</p>
+    <svg id="graph" viewBox="0 0 900 520" role="img" aria-label="Grafo de proyectos y tecnologías"></svg>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Proyecto</span><span><i style="background:var(--s2)"></i>Datos y NoSQL</span><span><i style="background:var(--s3)"></i>Automatización</span><span><i style="background:var(--s4)"></i>IA</span></div>
+  </div>
+</section>
+
+<section id="formacion">
+  <div class="shead"><p class="lbl">Formación</p><h2>Estudios y certificaciones</h2><p class="muted">Del más reciente al más antiguo.</p></div>
+  <div class="eduwrap"><svg id="tledu" viewBox="0 0 760 560" role="img" aria-label="Línea de tiempo de estudios y certificaciones"></svg>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Título</span><span><i style="background:var(--s2)"></i>Certificación</span></div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contact">
+    <div>
+      <p class="lbl">Contacto</p>
+      <h2 style="margin-top:10px">Resuelvo problemas que no sabes que tienes, antes de que se vuelvan una bola de nieve.</h2>
+      <p class="mail" id="mail" style="margin-top:14px">ardilupus@gmail.com</p>
+      <div class="cinfo">
+        <p>WhatsApp y teléfono: +57 301 768 5097</p>
+        <p>Bogotá, Colombia · trabajo remoto</p>
+      </div>
+    </div>
+    <div class="links">
+      <button class="btn pri" id="copy" type="button">Copiar correo</button>
+      <a class="btn" href="https://wa.me/573017685097" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+<footer>© 2026 Andrés Ardila · Casos 100% reales; las gráficas usan datos simulados salvo donde dice «datos reales».</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(function(){
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const loc=d3.formatLocale({decimal:",",thousands:".",grouping:[3],currency:["$",""]});
+const f2=loc.format(",.2f"), f0=loc.format(",.0f"), f1=loc.format(",.1f");
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const fd=d=>d.getDate()+' '+meses[d.getMonth()];
+const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll('line,path').attr('stroke','var(--rule)')};
+
+/* hero signal */
+(function(){
+  const s=d3.select('#signal'), r=rng(7), n=140, pts=d3.range(n).map(i=>{let v=28+Math.sin(i/6)*6+(r()-.5)*6; if(i>104&&i<112) v-=18*(1-Math.abs(i-108)/4); return [i/(n-1)*1120,v]});
+  s.append('path').attr('d',d3.line().curve(d3.curveMonotoneX)(pts)).attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',1.6).attr('opacity',.7);
+  s.append('circle').attr('cx',pts[108][0]).attr('cy',pts[108][1]).attr('r',5).attr('fill','var(--alert)');
+})();
+
+/* blueberries with brush */
+(function(){
+  const r=rng(42), days=120, T=1.6, start=new Date(2021,1,1);
+  const data=d3.range(days).map(i=>{let v=1.18+Math.sin(i/9)*.06+(r()-.5)*.1; if(i>=70) v+=(i-70)*.028; if(i>=96) v-=(i-96)*.024; return {t:d3.timeDay.offset(start,i), v:+v.toFixed(3)}});
+  const W=560,m={l:44,r:16}, H1=200, y1=14, y2=H1-26, bTop=236, bBot=286;
+  const svg=d3.select('#ce');
+  const x=d3.scaleTime().range([m.l,W-m.r]), xb=d3.scaleTime(d3.extent(data,d=>d.t),[m.l,W-m.r]);
+  const y=d3.scaleLinear([0.9,2.4],[y2,y1]), yb=d3.scaleLinear([0.9,2.4],[bBot,bTop]);
+  svg.append('defs').append('clipPath').attr('id','ceclip').append('rect').attr('x',m.l).attr('y',y1).attr('width',W-m.l-m.r).attr('height',y2-y1);
+  svg.append('rect').attr('x',m.l).attr('y',y1).attr('width',W-m.l-m.r).attr('height',y(T)-y1).attr('fill','var(--alert-soft)');
+  svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y(T)).attr('y2',y(T)).attr('stroke','var(--alert)').attr('stroke-dasharray','4 4');
+  svg.append('text').attr('x',W-m.r).attr('y',y(T)-6).attr('text-anchor','end').attr('font-size',11).attr('fill','var(--alert)').text('umbral 1,60');
+  const gx=svg.append('g').attr('transform',`translate(0,${y2})`);
+  svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(f2)).call(axisStyle);
+  const plot=svg.append('g').attr('clip-path','url(#ceclip)');
+  const line=plot.append('path').attr('fill','none').attr('stroke','var(--accent)').attr('stroke-width',2);
+  const dots=plot.append('g');
+  const fl=plot.append('line').attr('stroke','var(--alert)').attr('stroke-width',1.5);
+  const flab=svg.append('text').attr('font-size',11).attr('font-weight',500).attr('fill','var(--alert)');
+  // context
+  svg.append('path').datum(data).attr('d',d3.area().x(d=>xb(d.t)).y0(bBot).y1(d=>yb(d.v))).attr('fill','var(--accent-soft)').attr('stroke','var(--accent)').attr('stroke-width',1);
+  svg.append('g').attr('transform',`translate(0,${bBot})`).call(d3.axisBottom(xb).ticks(d3.timeMonth.every(1)).tickFormat(d=>meses[d.getMonth()]+' 2021')).call(axisStyle);
+  const beds=document.getElementById('beds');
+  let sel=[data[45].t,data[110].t];
+  function draw(){
+    x.domain(sel);
+    const vis=data.filter(d=>d.t>=sel[0]&&d.t<=sel[1]);
+    gx.call(d3.axisBottom(x).ticks(5).tickFormat(fd)).call(axisStyle);
+    line.attr('d',d3.line().x(d=>x(d.t)).y(d=>y(d.v)).curve(d3.curveMonotoneX)(data));
+    dots.selectAll('circle').data(vis,d=>+d.t).join('circle').attr('r',3).attr('cx',d=>x(d.t)).attr('cy',d=>y(d.v))
+      .attr('fill',d=>d.v>=T?'var(--alert)':'var(--surface)').attr('stroke',d=>d.v>=T?'var(--alert)':'var(--accent)');
+    const first=vis.find(d=>d.v>=T), over=vis.filter(d=>d.v>=T).length;
+    document.getElementById('per').textContent=fd(sel[0])+' – '+fd(sel[1]);
+    document.getElementById('over').textContent=over;
+    if(first){fl.attr('x1',x(first.t)).attr('x2',x(first.t)).attr('y1',y(first.v)-8).attr('y2',y1+4).attr('opacity',1);
+      const right=x(first.t)>W/2; flab.attr('x',x(first.t)+(right?-6:6)).attr('y',y1+14).attr('text-anchor',right?'end':'start').text('alerta: correo + Telegram');
+      document.getElementById('first').textContent=fd(first.t);}
+    else{fl.attr('opacity',0);flab.text('');document.getElementById('first').textContent='sin alerta';}
+    const b=+beds.value; document.getElementById('bedsv').textContent=b; document.getElementById('kg').textContent=f0(b*400)+' kg';
+  }
+  const brush=d3.brushX().extent([[m.l,bTop-4],[W-m.r,bBot]]).on('brush end',e=>{if(e.selection){sel=e.selection.map(xb.invert); if(sel[1]-sel[0]<5*864e5) sel[1]=d3.timeDay.offset(sel[0],5); draw();}});
+  const bg=svg.append('g').call(brush).call(brush.move,sel.map(xb));
+  bg.selectAll('.selection').attr('fill','var(--accent)').attr('fill-opacity',.18).attr('stroke','var(--accent)');
+  beds.addEventListener('input',draw); draw();
+})();
+
+/* fraud */
+(function(){
+  const r=rng(11), N=400, data=d3.range(N).map(i=>{const fraud=i%33===5&&i<396; return {day:1+Math.floor(r()*30), base:r()*30, a: fraud? r()<.75 : r()<.06, b: fraud? r()<.7 : r()<.03, c: fraud? r()<.8 : r()<.05, fraud}});
+  const W=560,H=250,m={t:16,r:16,b:34,l:44};
+  const svg=d3.select('#fr'), x=d3.scaleLinear([1,30],[m.l,W-m.r]), y=d3.scaleLinear([0,100],[H-m.b,m.t]);
+  svg.append('rect').attr('x',m.l).attr('y',m.t).attr('width',W-m.l-m.r).attr('height',y(60)-m.t).attr('fill','var(--alert-soft)');
+  svg.append('text').attr('x',W-m.r-4).attr('y',m.t+14).attr('text-anchor','end').attr('font-size',11).attr('fill','var(--alert)').text('se detiene para revisión (≥ 60)');
+  svg.append('g').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d=>'día '+d)).call(axisStyle);
+  svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5)).call(axisStyle);
+  const jit=rng(3), dots=svg.append('g').selectAll('circle').data(data).join('circle').attr('cx',p=>x(p.day)+(jit()-.5)*12).attr('r',p=>p.fraud?4:2.8);
+  const ids=['r1','r2','r3'].map(i=>document.getElementById(i));
+  const score=p=>{const [a,b,c]=ids.map(e=>e.checked); return Math.min(100,p.base+(a&&p.a?30:0)+(b&&p.b?35:0)+(c&&p.c?30:0))};
+  function upd(){
+    let hold=0,ct=0; data.forEach(p=>{p.s=score(p); if(p.s>=60){hold++; if(p.fraud)ct++;}});
+    dots.transition().duration(RM?0:450).attr('cy',p=>y(p.s)).attr('fill',p=>p.s>=60?'var(--alert)':'var(--accent)').attr('opacity',p=>p.s>=60?1:.45);
+    document.getElementById('fhold').textContent=hold; document.getElementById('fcatch').textContent=ct+' de 12';
+  }
+  ids.forEach(e=>e.addEventListener('change',upd)); upd();
+})();
+
+/* banks */
+(function(){
+  const C={
+    co:{steps:[['Región','LATAM'],['País y datos','Colombia: cédula, dirección y correo'],['Banco','Elige el banco en la lista'],['Validación','El código SWIFT se completa solo'],['Resumen','Se revisa y se envía el caso por correo']]},
+    br:{steps:[['Región','LATAM'],['País y datos','Brasil: CPF y datos de contacto'],['Banco','Más de 70.000 registros: código del banco, ej. Itaú 341'],['Validación','Se pide la agencia de 4 dígitos y se valida la pareja'],['Resumen','Se revisa y se envía el caso por correo']]},
+    fr:{steps:[['Región','EMEA'],['País y datos','Francia: código postal obligatorio'],['Banco','El cliente escribe su IBAN de 27 caracteres'],['Validación','Se extraen los 10 dígitos de banco y agencia y se cruzan con la lista'],['Resumen','Se revisa y se envía el caso por correo']], iban:true},
+    jp:{steps:[['Región','APAC'],['País y datos','Japón: el código postal es clave'],['Banco','Más de 40.000 registros: código del banco'],['Validación','Se pide el código de sucursal y se valida la pareja'],['Resumen','Se revisa y se envía el caso por correo']]},
+    cn:{steps:[['Región','APAC'],['País y datos','China: datos de contacto'],['Banco','Más de 170.000 registros: el cliente conoce el código de su banco'],['Validación','El código encuentra el banco exacto al instante'],['Resumen','Se revisa y se envía el caso por correo']]}
+  };
+  const btns=[...document.querySelectorAll('#bk-tabs button')];
+  function show(k){
+    btns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+    document.getElementById('bk-steps').innerHTML=C[k].steps.map((s,i)=>`<div class="step${i===2||i===3?' hot':''}"><b>${s[0]}</b>${s[1]}</div>`).join('');
+    document.getElementById('bk-extra').innerHTML=C[k].iban?'<p class="iban" aria-label="IBAN de ejemplo">FR76 <mark>3000 6</mark><mark>000 01</mark>12 3456 7890 189</p><p class="note">IBAN de ejemplo público. Resaltados: código de banco y de agencia (posiciones 5 a 14), que se cruzan con la llave del banco.</p>':'';
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.k))); show('co');
+  const box=document.getElementById('bk-batches'), N=240;
+  box.innerHTML=d3.range(N).map(i=>`<i class="on${(i+1)%20===0?' cut':''}"></i>`).join('');
+  const cells=[...box.children], out=document.getElementById('bk-count');
+  document.getElementById('bk-run').addEventListener('click',()=>{
+    cells.forEach(c=>c.classList.remove('on','cut')); let i=0;
+    const step=()=>{for(let k=0;k<6&&i<N;k++,i++){cells[i].classList.add('on'); if((i+1)%20===0) cells[i].classList.add('cut');} out.textContent=`${Math.min(i,N)} de ${N} lotes · ${f0(Math.min(i,N)*5000)} bancos`; if(i<N) setTimeout(step,RM?0:40);};
+    step();
+  });
+  out.textContent='240 de 240 lotes · 1.200.000 bancos';
+})();
+
+/* sentiment ensemble */
+(function(){
+  const M=['Modelo 1','Modelo 2','Modelo 3','Modelo 4','Modelo 5'];
+  const C=[
+    {q:'"The omelette was great, but the chicken salad sandwich had no flavor at all."', v:['pos','neg','neu','pos','neg'], esc:'Empate entre positivo y negativo', parts:[['Omelette','positivo','pos'],['Chicken salad sandwich (sabor)','negativo','neg']]},
+    {q:'"Great, no chicken salad sandwich again. Just what I wanted."', v:['pos','pos','pos','neu','neg'], esc:'Posible sarcasmo: palabras positivas con una queja repetida', parts:[['Chicken salad sandwich (disponibilidad)','negativo','neg'],['Tono','sarcasmo','neg']]},
+    {q:'"Loved the omelette, warm and fresh. Great crew."', v:['pos','pos','pos','pos','neu'], esc:null, parts:[]}
+  ];
+  const lab={pos:'positivo',neg:'negativo',neu:'neutro'};
+  const btns=[...document.querySelectorAll('#s-tabs button')];
+  function show(i){
+    const c=C[i]; btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
+    document.getElementById('sq').textContent=c.q;
+    document.getElementById('sv').innerHTML=c.v.map((v,j)=>`<div class="vote"><i>${M[j]}</i><b class="${v}">${lab[v]}</b></div>`).join('');
+    const top=[...d3.rollup(c.v,a=>a.length,d=>d)].sort((a,b)=>b[1]-a[1]);
+    const d=document.getElementById('sd'), p=document.getElementById('sp');
+    if(c.esc){d.className='verdict esc'; d.innerHTML=`<b>Se escala al LLM.</b> ${c.esc}. Analiza frase por frase e ingrediente:`; p.innerHTML=c.parts.map(x=>`<li><span>${x[0]}</span><span class="${x[2]}">${x[1]}</span></li>`).join('');}
+    else{d.className='verdict'; d.innerHTML=`<b>Mayoría clara:</b> ${top[0][1]} de 5 votos <span class="${top[0][0]}">${lab[top[0][0]]}</span>. No necesita escalar.`; p.innerHTML='';}
+  }
+  btns.forEach((b,i)=>b.addEventListener('click',()=>show(i))); show(0);
+})();
+
+/* job agent: real monthly counts */
+(function(){
+  const S=['LinkedIn','Computrabajo','Elempleo','Magneto'], col={LinkedIn:'var(--accent)',Computrabajo:'var(--s2)',Elempleo:'var(--s3)',Magneto:'var(--s4)'};
+  const D=[{m:'Mar 2026',LinkedIn:1365,Computrabajo:0,Elempleo:146,Magneto:52},{m:'Abr 2026',LinkedIn:1615,Computrabajo:75,Elempleo:50,Magneto:64},{m:'May 2026',LinkedIn:1628,Computrabajo:175,Elempleo:33,Magneto:66},{m:'Jun 2026',LinkedIn:1405,Computrabajo:108,Elempleo:113,Magneto:72},{m:'Oct 2026',LinkedIn:548,Computrabajo:30,Elempleo:41,Magneto:38}];
+  D.forEach(d=>d.tot=d3.sum(S,s=>d[s]));
+  const W=560,l=72,rr=56, x=d3.scaleLinear([0,d3.max(D,d=>d.tot)],[l,W-rr]), svg=d3.select('#jobs'), bh=30, gap=12;
+  const rows=svg.selectAll('g').data(D).join('g').attr('transform',(d,i)=>`translate(0,${8+i*(bh+gap)})`);
+  rows.append('text').attr('x',0).attr('y',bh/2+4).attr('font-size',12).attr('fill','var(--ink)').text(d=>d.m);
+  rows.each(function(d){
+    let x0=0; const g=d3.select(this);
+    S.forEach(s=>{const w=x(x0+d[s])-x(x0); if(d[s]>0){
+      g.append('rect').attr('x',x(x0)).attr('y',0).attr('width',w).attr('height',bh).attr('fill',col[s]);
+      if(w>34) g.append('text').attr('x',x(x0)+w/2).attr('y',bh/2+4).attr('text-anchor','middle').attr('font-size',10.5).attr('fill','var(--bg)').text(f0(d[s]));}
+      x0+=d[s];});
+    g.append('text').attr('x',x(d.tot)+6).attr('y',bh/2+4).attr('font-size',12).attr('font-weight',600).attr('fill','var(--ink)').text(f0(d.tot));
+  });
+  const tot={}; S.forEach(s=>tot[s]=d3.sum(D,d=>d[s]));
+  document.getElementById('jobs-leg').innerHTML=S.map(s=>`<span><i style="background:${col[s]}"></i>${s} · ${f0(tot[s])} en total</span>`).join('')+'<span>Segmentos pequeños: valor en el total del portal</span>';
+
+  const r=rng(5), N=1902, sc=d3.range(N).map(()=>{const u=(r()+r()+r()+r())/4; return Math.max(20,Math.min(99,30+u*70+(r()-.5)*8))});
+  const svg2=d3.select('#match'), m={l:44,r:16,t:10,b:30}, H=170;
+  const xm=d3.scaleLinear([20,100],[m.l,W-m.r]), bins=d3.bin().domain([20,100]).thresholds(d3.range(20,101,4))(sc);
+  const ym=d3.scaleLinear([0,d3.max(bins,b=>b.length)],[H-m.b,m.t]);
+  svg2.append('g').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(xm).ticks(8).tickFormat(d=>d+'%')).call(axisStyle);
+  svg2.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(ym).ticks(4)).call(axisStyle);
+  const bars=svg2.append('g').selectAll('rect').data(bins).join('rect').attr('x',b=>xm(b.x0)+1).attr('width',b=>Math.max(0,xm(b.x1)-xm(b.x0)-2)).attr('y',b=>ym(b.length)).attr('height',b=>ym(0)-ym(b.length));
+  const tl=svg2.append('line').attr('y1',m.t).attr('y2',H-m.b).attr('stroke','var(--alert)').attr('stroke-width',1.5);
+  const th=document.getElementById('mth');
+  function upd(){const t=+th.value; document.getElementById('mthv').textContent=t+'%';
+    bars.attr('fill',b=>b.x0>=t?'var(--alert)':'var(--rule)'); tl.attr('x1',xm(t)).attr('x2',xm(t));
+    const p=sc.filter(s=>s>=t).length; document.getElementById('mpass').textContent=f0(p)+' ofertas';
+    document.getElementById('msave').textContent=f0(N-p)+' ofertas';}
+  th.addEventListener('input',upd); upd();
+})();
+
+/* comments: basic vs agent */
+(function(){
+  const K=['Positivo','Neutro','Negativo','Pregunta o intención de compra','Sarcasmo'], col=['var(--ok)','var(--rule)','var(--alert)','var(--s2)','var(--s4)'];
+  const W3=[
+    {b:[78,20,2,0,0],a:[44,10,18,20,8]},
+    {b:[81,17,2,0,0],a:[38,9,27,17,9]},
+    {b:[76,22,2,0,0],a:[52,12,11,22,3]}];
+  const W=560,l=150,rr=16, x=d3.scaleLinear([0,100],[l,W-rr]), svg=d3.select('#cm');
+  const rows=[['Herramienta básica','b'],['Modelo agéntico','a']];
+  document.getElementById('cm-leg').innerHTML=K.map((k,i)=>`<span><i style="background:${col[i]}"></i>${k}</span>`).join('');
+  const btns=[...document.querySelectorAll('#w-tabs button')];
+  function show(w){
+    btns.forEach((b,j)=>b.setAttribute('aria-pressed',j===w)); svg.selectAll('*').remove();
+    rows.forEach((rw,ri)=>{
+      const g=svg.append('g').attr('transform',`translate(0,${20+ri*80})`); let x0=0;
+      g.append('text').attr('x',0).attr('y',24).attr('font-size',12).attr('fill','var(--ink)').text(rw[0]);
+      W3[w][rw[1]].forEach((v,i)=>{ if(!v) return; const w2=x(x0+v)-x(x0);
+        g.append('rect').attr('x',x(x0)).attr('y',4).attr('width',w2).attr('height',34).attr('fill',col[i]);
+        g.append('text').attr('x',x(x0)+w2/2).attr('y',w2>26?26:54).attr('text-anchor','middle').attr('font-size',11).attr('font-weight',500).attr('fill',w2>26?(i===1?'var(--ink)':'var(--bg)'):'var(--ink)').text(v+'%');
+        x0+=v;});
+    });
+  }
+  btns.forEach((b,i)=>b.addEventListener('click',()=>show(i))); show(0);
+})();
+
+/* TFM real ranking */
+(function(){
+  const T={"comp":["Goles","Asistencias","Regates","Creación de tiros","Pases progresivos","Control de balón"],"data":{"2021-2022":{"Todas":[{"j":"Bernardo Silva","p":140.0,"e":"Manchester City","c":[10.2,5.8,3.4,12.7,9.2,28.7]},{"j":"Domenico Berardi","p":127.4,"e":"Sassuolo","c":[16.8,19.0,2.0,15.1,9.7,16.7]},{"j":"Mohamed Salah","p":124.6,"e":"Liverpool","c":[31.0,17.4,2.0,12.3,6.5,9.4]},{"j":"Vinicius Júnior","p":121.2,"e":"Real Madrid","c":[15.8,9.3,2.2,14.9,5.9,12.8]},{"j":"Antonio Candreva","p":119.0,"e":"Sampdoria","c":[8.2,12.1,1.6,13.1,11.3,25.9]},{"j":"Son Heung-min","p":118.0,"e":"Tottenham","c":[26.8,8.5,2.9,12.3,4.9,10.7]},{"j":"Karim Benzema","p":116.9,"e":"Real Madrid","c":[27.9,12.3,2.3,9.9,8.2,18.5]},{"j":"Sergio Canales","p":112.4,"e":"Betis","c":[4.6,7.7,1.4,10.9,11.8,22.6]},{"j":"Martin Ødegaard","p":109.5,"e":"Arsenal","c":[8.8,4.8,1.6,13.8,11.8,16.4]},{"j":"Harry Kane","p":108.8,"e":"Tottenham","c":[22.3,10.7,3.3,11.7,7.8,10.2]}],"Italia":[{"j":"Domenico Berardi","p":127.4,"e":"Sassuolo","c":[16.8,19.0,2.0,15.1,9.7,16.7]},{"j":"Antonio Candreva","p":119.0,"e":"Sampdoria","c":[8.2,12.1,1.6,13.1,11.3,25.9]},{"j":"Gianluca Caprari","p":104.6,"e":"Hellas Verona","c":[12.2,7.1,3.4,12.1,8.1,11.3]},{"j":"Lorenzo Insigne","p":102.2,"e":"Napoli","c":[11.4,8.9,1.7,10.3,7.0,18.6]},{"j":"Felipe Anderson","p":97.5,"e":"Lazio","c":[7.2,8.4,2.8,9.8,5.9,11.9]},{"j":"Henrikh Mkhitaryan","p":93.2,"e":"Roma","c":[7.2,6.2,2.2,8.0,7.7,11.8]},{"j":"Rick Karsdorp","p":93.1,"e":"Roma","c":[0.0,2.2,1.1,7.6,7.2,34.0]},{"j":"Gerard Deulofeu","p":85.6,"e":"Udinese","c":[12.5,4.9,2.0,11.9,7.9,7.7]},{"j":"Rafael Leão","p":84.4,"e":"Milan","c":[10.6,9.0,3.9,8.7,4.7,8.9]},{"j":"Ciro Immobile","p":83.9,"e":"Lazio","c":[29.8,2.9,1.4,6.3,2.9,8.2]}],"Inglaterra":[{"j":"Bernardo Silva","p":140.0,"e":"Manchester City","c":[10.2,5.8,3.4,12.7,9.2,28.7]},{"j":"Mohamed Salah","p":124.6,"e":"Liverpool","c":[31.0,17.4,2.0,12.3,6.5,9.4]},{"j":"Son Heung-min","p":118.0,"e":"Tottenham","c":[26.8,8.5,2.9,12.3,4.9,10.7]},{"j":"Martin Ødegaard","p":109.5,"e":"Arsenal","c":[8.8,4.8,1.6,13.8,11.8,16.4]},{"j":"Harry Kane","p":108.8,"e":"Tottenham","c":[22.3,10.7,3.3,11.7,7.8,10.2]},{"j":"Bukayo Saka","p":103.3,"e":"Arsenal","c":[12.7,8.3,1.7,13.5,4.9,12.7]},{"j":"Sadio Mané","p":99.1,"e":"Liverpool","c":[20.4,3.4,3.0,10.2,7.2,8.8]},{"j":"Wilfried Zaha","p":97.4,"e":"Crystal Palace","c":[16.9,1.4,3.1,10.3,6.3,6.1]},{"j":"James Maddison","p":97.0,"e":"Leicester City","c":[13.3,9.7,2.5,9.3,7.0,15.4]},{"j":"Pablo Fornals","p":94.4,"e":"West Ham","c":[7.2,3.7,1.7,9.9,10.1,18.1]}],"España":[{"j":"Vinicius Júnior","p":121.2,"e":"Real Madrid","c":[15.8,9.3,2.2,14.9,5.9,12.8]},{"j":"Karim Benzema","p":116.9,"e":"Real Madrid","c":[27.9,12.3,2.3,9.9,8.2,18.5]},{"j":"Sergio Canales","p":112.4,"e":"Betis","c":[4.6,7.7,1.4,10.9,11.8,22.6]},{"j":"Iago Aspas","p":101.1,"e":"Celta Vigo","c":[20.0,6.1,3.5,11.1,5.7,13.2]},{"j":"Raúl de Tomás","p":84.0,"e":"Espanyol","c":[20.0,3.9,3.3,5.9,4.5,8.3]},{"j":"Yannick Carrasco","p":83.9,"e":"Atlético Madrid","c":[7.0,6.7,4.9,9.7,4.2,9.1]},{"j":"Álvaro García","p":77.1,"e":"Rayo Vallecano","c":[7.9,4.4,1.3,7.8,4.5,12.6]},{"j":"José Luis Morales","p":77.0,"e":"Levante","c":[14.0,7.4,2.0,8.9,4.8,6.0]},{"j":"Gonçalo Guedes","p":76.7,"e":"Valencia","c":[12.1,6.9,2.8,8.6,5.7,6.5]},{"j":"Gavi","p":75.9,"e":"Barcelona","c":[2.2,3.9,2.9,4.1,4.9,11.6]}]},"2022-2023":{"Todas":[{"j":"Bruno Fernandes","p":138.8,"e":"Manchester Utd","c":[10.7,9.8,1.8,18.6,13.4,30.5]},{"j":"Bukayo Saka","p":124.9,"e":"Arsenal","c":[19.0,12.0,2.3,14.6,5.7,13.9]},{"j":"Antoine Griezmann","p":120.6,"e":"Atlético Madrid","c":[14.1,16.2,2.8,12.6,8.1,19.6]},{"j":"Mohamed Salah","p":117.8,"e":"Liverpool","c":[24.6,16.2,2.1,13.0,7.6,9.4]},{"j":"Harry Kane","p":113.1,"e":"Tottenham","c":[32.8,4.5,1.7,12.1,9.8,11.2]},{"j":"Federico Valverde","p":110.9,"e":"Real Madrid","c":[8.8,2.9,2.5,6.4,6.8,34.2]},{"j":"Alex Iwobi","p":106.6,"e":"Everton","c":[3.2,7.9,2.6,10.7,10.3,20.6]},{"j":"Vinicius Júnior","p":106.6,"e":"Real Madrid","c":[10.5,8.8,1.6,13.3,4.3,11.2]},{"j":"Khvicha Kvaratskhelia","p":103.3,"e":"Napoli","c":[12.3,11.6,1.7,11.2,4.4,12.5]},{"j":"Solly March","p":101.8,"e":"Brighton","c":[8.8,10.3,2.2,11.4,7.1,18.9]}],"Italia":[{"j":"Khvicha Kvaratskhelia","p":103.3,"e":"Napoli","c":[12.3,11.6,1.7,11.2,4.4,12.5]},{"j":"Mattia Zaccagni","p":98.8,"e":"Lazio","c":[11.6,7.5,2.5,6.9,3.6,14.8]},{"j":"Felipe Anderson","p":89.3,"e":"Lazio","c":[11.9,2.3,3.5,8.9,5.7,10.9]},{"j":"Rafael Leão","p":85.9,"e":"Milan","c":[16.6,9.8,2.1,9.5,5.6,9.2]},{"j":"Nikola Vlašić","p":79.5,"e":"Torino","c":[4.9,6.9,2.4,10.7,5.6,8.2]},{"j":"Lewis Ferguson","p":76.4,"e":"Bologna","c":[6.7,0.0,0.6,5.2,4.3,19.6]},{"j":"Armand Lauriente","p":73.7,"e":"Sassuolo","c":[7.8,6.7,1.8,9.7,4.6,8.0]},{"j":"Lautaro Martínez","p":73.6,"e":"Inter","c":[18.1,6.0,1.2,7.4,4.0,5.8]},{"j":"Domenico Berardi","p":72.3,"e":"Sassuolo","c":[11.9,8.9,1.1,9.6,5.5,9.5]},{"j":"Filip Kostić","p":71.8,"e":"Juventus","c":[3.3,9.5,1.4,7.1,3.6,14.1]}],"Inglaterra":[{"j":"Bruno Fernandes","p":138.8,"e":"Manchester Utd","c":[10.7,9.8,1.8,18.6,13.4,30.5]},{"j":"Bukayo Saka","p":124.9,"e":"Arsenal","c":[19.0,12.0,2.3,14.6,5.7,13.9]},{"j":"Mohamed Salah","p":117.8,"e":"Liverpool","c":[24.6,16.2,2.1,13.0,7.6,9.4]},{"j":"Harry Kane","p":113.1,"e":"Tottenham","c":[32.8,4.5,1.7,12.1,9.8,11.2]},{"j":"Alex Iwobi","p":106.6,"e":"Everton","c":[3.2,7.9,2.6,10.7,10.3,20.6]},{"j":"Solly March","p":101.8,"e":"Brighton","c":[8.8,10.3,2.2,11.4,7.1,18.9]},{"j":"James Maddison","p":98.5,"e":"Leicester City","c":[8.7,9.3,1.4,13.1,8.1,16.1]},{"j":"Gabriel Martinelli","p":96.5,"e":"Arsenal","c":[16.5,7.0,2.2,11.0,4.9,11.1]},{"j":"Jack Grealish","p":95.4,"e":"Manchester City","c":[5.5,6.3,1.6,8.2,4.9,19.3]},{"j":"Michael Olise","p":89.9,"e":"Crystal Palace","c":[3.3,10.4,1.7,12.0,7.1,10.3]}],"España":[{"j":"Antoine Griezmann","p":120.6,"e":"Atlético Madrid","c":[14.1,16.2,2.8,12.6,8.1,19.6]},{"j":"Federico Valverde","p":110.9,"e":"Real Madrid","c":[8.8,2.9,2.5,6.4,6.8,34.2]},{"j":"Vinicius Júnior","p":106.6,"e":"Real Madrid","c":[10.5,8.8,1.6,13.3,4.3,11.2]},{"j":"Iago Aspas","p":91.3,"e":"Celta Vigo","c":[13.3,3.8,1.3,11.8,7.9,14.3]},{"j":"Moi Gómez","p":90.4,"e":"Osasuna","c":[1.7,2.1,2.0,7.5,8.3,25.6]},{"j":"Isaac Palazón Camacho","p":89.3,"e":"Rayo Vallecano","c":[8.5,6.0,2.5,10.1,6.2,11.3]},{"j":"Rodrygo","p":87.0,"e":"Real Madrid","c":[8.4,6.2,1.9,9.5,3.4,13.2]},{"j":"Robert Lewandowski","p":83.6,"e":"Barcelona","c":[22.4,6.8,1.7,7.5,4.8,6.5]},{"j":"Lee Kang-in","p":81.5,"e":"Mallorca","c":[6.2,6.8,4.2,8.9,4.6,10.8]},{"j":"Karim Benzema","p":80.2,"e":"Real Madrid","c":[19.3,2.5,0.9,8.0,6.7,12.9]}]}}};
+  const W=560,l=170,rr=56, svg=d3.select('#tfm'), svc=d3.select('#tfc');
+  const sS=document.getElementById('tf-s'), sL=document.getElementById('tf-l');
+  let cur=null;
+  function comps(p){
+    svc.selectAll('*').remove(); document.getElementById('tf-name').textContent='Componentes del puntaje de '+p.j;
+    const x=d3.scaleLinear([0,Math.max(35,d3.max(p.c))],[l,W-rr]);
+    T.comp.forEach((k,i)=>{const g=svc.append('g').attr('transform',`translate(0,${6+i*30})`);
+      g.append('text').attr('x',0).attr('y',16).attr('font-size',12).attr('fill','var(--ink)').text(k);
+      g.append('rect').attr('x',l).attr('y',3).attr('height',20).attr('rx',3).attr('width',x(p.c[i])-l).attr('fill','var(--s2)');
+      g.append('text').attr('x',x(p.c[i])+6).attr('y',17).attr('font-size',11.5).attr('fill','var(--ink)').text(f1(p.c[i]));});
+  }
+  function draw(){
+    const D=T.data[sS.value][sL.value]; svg.selectAll('*').remove();
+    const x=d3.scaleLinear([0,d3.max(D,d=>d.p)],[l,W-rr]);
+    D.forEach((p,i)=>{
+      const g=svg.append('g').attr('transform',`translate(0,${4+i*32})`).style('cursor','pointer').attr('tabindex',0).attr('role','button').attr('aria-label',p.j);
+      g.append('text').attr('x',0).attr('y',13).attr('font-size',12).attr('font-weight',600).attr('fill','var(--ink)').text((i+1)+'. '+p.j);
+      g.append('text').attr('x',0).attr('y',26).attr('font-size',10).attr('fill','var(--muted)').text(p.e.length>24?p.e.slice(0,23)+'…':p.e);
+      const bar=g.append('rect').attr('x',l).attr('y',4).attr('height',20).attr('rx',3).attr('width',x(p.p)-l).attr('fill',i===0?'var(--accent)':'var(--accent-soft)').attr('stroke','var(--accent)');
+      g.append('text').attr('x',x(p.p)+6).attr('y',18).attr('font-size',11.5).attr('fill','var(--ink)').text(f1(p.p));
+      const pick=()=>{svg.selectAll('rect').attr('fill','var(--accent-soft)'); bar.attr('fill','var(--accent)'); comps(p);};
+      g.on('click',pick).on('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+    });
+    comps(D[0]);
+  }
+  sS.addEventListener('change',draw); sL.addEventListener('change',draw); draw();
+})();
+
+/* time index */
+(function(){
+  const data=[{k:'Antes de automatizar',v:100},{k:'Después de automatizar',v:5}];
+  const W=560,l=170,rr=50, x=d3.scaleLinear([0,100],[l,W-rr]), svg=d3.select('#tm');
+  const g=svg.selectAll('g').data(data).join('g').attr('transform',(d,i)=>`translate(0,${18+i*52})`);
+  g.append('text').attr('x',0).attr('y',22).attr('font-size',12).attr('fill','var(--ink)').text(d=>d.k);
+  g.append('rect').attr('x',l).attr('y',6).attr('height',26).attr('rx',4).attr('width',d=>x(d.v)-l).attr('fill',(d,i)=>i?'var(--accent)':'var(--rule)');
+  g.append('text').attr('x',d=>x(d.v)+8).attr('y',24).attr('font-size',13).attr('font-weight',500).attr('fill','var(--ink)').text(d=>d.v);
+})();
+
+/* experience timeline */
+(function(){
+  const now=new Date(2026,10,1);
+  const J=[
+    {id:'j-asylum',t:'Business Analyst – BI',o:'Asylum marketing',a:new Date(2026,6,1),b:now,k:'Empleo',d:['BI para Novo Nordisk, Rimax y Rayovac','Migración de dashboards a Snowflake','Gobernanza de datos y proyecciones']},
+    {id:'j-delta',t:'Analista de Datos',o:'BSSC · Delta Air Lines',a:new Date(2025,3,1),b:new Date(2026,2,31),k:'Empleo',d:['Validación multinivel: 200+ casos diarios','App de 1,2 millones de bancos','45 intentos de fraude detectados a tiempo']},
+    {id:'j-agente',t:'Agente de búsqueda de empleo',o:'Proyecto propio',a:new Date(2025,2,1),b:now,k:'Proyecto',d:['5 fuentes, puntaje y alertas por Telegram','7.600+ ofertas filtradas']},
+    {id:'j-scraper',t:'Extractor de comentarios',o:'Proyecto propio',a:new Date(2026,0,1),b:now,k:'Proyecto',d:['Playwright, JSON y análisis agéntico']},
+    {id:'j-tfm',t:'Investigador · TFM',o:'UNIR',a:new Date(2024,0,1),b:new Date(2024,8,30),k:'Proyecto',d:['Ranking de delanteros en tres ligas europeas']},
+    {id:'j-esap',t:'Instructor de Ciencia de Datos',o:'ESAP',a:new Date(2022,0,1),b:new Date(2023,11,31),k:'Empleo',d:['150+ participantes formados']},
+    {id:'j-cvr',t:'Administrador de Bases de Datos',o:'CVR Ingeniería',a:new Date(2021,0,1),b:new Date(2021,6,31),k:'Empleo',d:['Alertas tempranas en cultivo de arándanos']},
+    {id:'j-ayc',t:'Arquitecto de Datos',o:'Asesorías y Cobranzas',a:new Date(2020,5,1),b:new Date(2020,11,31),k:'Empleo',d:['Arquitectura y gobernanza de datos']}
+  ];
+  const W=900,l=16,rr=16, svg=d3.select('#tlexp'), x=d3.scaleTime([new Date(2020,0,1),new Date(2027,0,1)],[l,W-rr]);
+  const lanes=[0,1,2,3,0,1,2,0];
+  const H=300, base=H-30;
+  svg.append('g').attr('transform',`translate(0,${base})`).call(d3.axisBottom(x).ticks(d3.timeYear.every(1)).tickFormat(d3.timeFormat('%Y'))).call(axisStyle);
+  const det=document.getElementById('tl-detail');
+  const gs=svg.selectAll('g.it').data(J).join('g').attr('class','it').style('cursor','pointer').attr('tabindex',0).attr('role','button').attr('aria-label',d=>d.t+', '+d.o);
+  gs.each(function(d,i){
+    const g=d3.select(this), y=base-24-lanes[i]*58, w=Math.max(8,x(d.b)-x(d.a));
+    g.append('rect').attr('class','bar').attr('x',x(d.a)).attr('y',y-12).attr('width',w).attr('height',14).attr('rx',4).attr('fill',d.k==='Empleo'?'var(--accent)':'var(--s2)');
+    const right=x(d.a)>W-220;
+    g.append('text').attr('x',right?x(d.b):x(d.a)).attr('text-anchor',right?'end':'start').attr('y',y-18).attr('font-size',11.5).attr('font-weight',600).attr('fill','var(--ink)').text(d.t);
+    g.append('text').attr('x',right?x(d.b):x(d.a)).attr('text-anchor',right?'end':'start').attr('y',y+16).attr('font-size',10.5).attr('fill','var(--muted)').text(d.o);
+  });
+  svg.append('text').attr('x',x(now)).attr('y',14).attr('text-anchor','end').attr('font-size',10.5).attr('fill','var(--alert)').text('hoy');
+  svg.append('line').attr('x1',x(now)).attr('x2',x(now)).attr('y1',18).attr('y2',base).attr('stroke','var(--alert)').attr('stroke-dasharray','3 3');
+  const fm=d=>String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();
+  function pick(d){
+    gs.select('rect.bar').attr('stroke',e=>e===d?'var(--ink)':'none').attr('stroke-width',2);
+    det.innerHTML=`<p class="lbl">${fm(d.a)} – ${d.b===now?'hoy':fm(d.b)} · ${d.k}</p><h3>${d.t}</h3><p class="org">${d.o}</p><ul>${d.d.map(s=>`<li>${s}</li>`).join('')}</ul><p><a href="#${d.id}">Ver detalle completo</a></p>`;
+  }
+  gs.on('click',(e,d)=>pick(d)).on('mouseenter',(e,d)=>pick(d)).on('keydown',(e,d)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(d);}});
+  pick(J[0]);
+})();
+
+/* graph */
+(function(){
+  const P='var(--accent)', Dn='var(--s2)', Au='var(--s3)', Ai='var(--s4)';
+  const nodes=[
+    ['Arándanos','p'],['Validación Delta','p'],['App de bancos','p'],['Sentimiento catering','p'],['Agente de empleo','p'],['Extractor de comentarios','p'],['Ranking TFM','p'],['BI Asylum','p'],
+    ['Python','a'],['SQL','d'],['MongoDB · NoSQL','d'],['JSON','d'],['Neo4j','d'],['Snowflake','d'],['Modelo estrella','d'],['SAP HANA','d'],
+    ['Power Automate','a'],['Power Apps','a'],['Selenium','a'],['Playwright','a'],['Telegram API','a'],
+    ['LangChain','i'],['Embeddings · RAG','i'],['LLMs locales y API','i'],['Power BI','d']
+  ].map(([id,g])=>({id,g}));
+  const L=[['Arándanos','Python'],['Arándanos','SQL'],['Arándanos','Telegram API'],
+    ['Validación Delta','Python'],['Validación Delta','SAP HANA'],['Validación Delta','SQL'],
+    ['App de bancos','Python'],['App de bancos','SAP HANA'],['App de bancos','Power Automate'],['App de bancos','Power Apps'],
+    ['Sentimiento catering','LangChain'],['Sentimiento catering','LLMs locales y API'],['Sentimiento catering','Python'],['Sentimiento catering','JSON'],
+    ['Agente de empleo','Selenium'],['Agente de empleo','Python'],['Agente de empleo','Telegram API'],['Agente de empleo','MongoDB · NoSQL'],['Agente de empleo','Embeddings · RAG'],['Agente de empleo','LangChain'],
+    ['Extractor de comentarios','Playwright'],['Extractor de comentarios','JSON'],['Extractor de comentarios','LLMs locales y API'],['Extractor de comentarios','MongoDB · NoSQL'],['Extractor de comentarios','Python'],
+    ['Ranking TFM','Python'],['Ranking TFM','SQL'],['Ranking TFM','Power BI'],
+    ['BI Asylum','Snowflake'],['BI Asylum','Modelo estrella'],['BI Asylum','Python'],['BI Asylum','SQL'],['BI Asylum','Neo4j'],
+    ['JSON','MongoDB · NoSQL'],['Embeddings · RAG','LangChain'],['LangChain','LLMs locales y API']].map(([s,t])=>({source:s,target:t}));
+  const color={p:P,d:Dn,a:Au,i:Ai};
+  const W=900,H=520, svg=d3.select('#graph');
+  const sim=d3.forceSimulation(nodes).force('link',d3.forceLink(L).id(d=>d.id).distance(d=>d.source.g==='p'?90:70))
+    .force('charge',d3.forceManyBody().strength(-380)).force('center',d3.forceCenter(W/2,H/2)).force('collide',d3.forceCollide(46)).force('x',d3.forceX(W/2).strength(.04)).force('y',d3.forceY(H/2).strength(.07)).stop();
+  for(let i=0;i<400;i++) sim.tick();
+  nodes.forEach(n=>{n.x=Math.max(70,Math.min(W-70,n.x)); n.y=Math.max(24,Math.min(H-24,n.y));});
+  const link=svg.append('g').selectAll('line').data(L).join('line').attr('stroke','var(--rule)').attr('stroke-width',1.4);
+  const node=svg.append('g').selectAll('g').data(nodes).join('g').style('cursor','grab').attr('tabindex',0);
+  node.append('circle').attr('r',d=>d.g==='p'?11:7).attr('fill',d=>color[d.g]).attr('stroke','var(--surface)').attr('stroke-width',2);
+  node.append('text').attr('x',d=>d.g==='p'?15:11).attr('y',4).attr('font-size',d=>d.g==='p'?12.5:11.5).attr('font-weight',d=>d.g==='p'?600:400).attr('fill','var(--ink)').attr('paint-order','stroke').attr('stroke','var(--surface)').attr('stroke-width',3).text(d=>d.id);
+  function pos(){link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y); node.attr('transform',d=>`translate(${d.x},${d.y})`);}
+  pos();
+  const nb=n=>new Set(L.filter(l=>l.source===n||l.target===n).flatMap(l=>[l.source.id,l.target.id]));
+  function hi(n){const s=n?nb(n):null; node.attr('opacity',d=>!s||s.has(d.id)?1:.18); link.attr('stroke',l=>n&&(l.source===n||l.target===n)?color[n.g]:'var(--rule)').attr('opacity',l=>!n||l.source===n||l.target===n?1:.15);}
+  node.on('mouseenter',(e,d)=>hi(d)).on('mouseleave',()=>hi(null)).on('focus',(e,d)=>hi(d)).on('blur',()=>hi(null));
+  node.call(d3.drag().on('start',function(e,d){d3.select(this).style('cursor','grabbing');hi(d)}).on('drag',(e,d)=>{d.x=Math.max(20,Math.min(W-20,e.x));d.y=Math.max(20,Math.min(H-20,e.y));pos();}).on('end',function(){d3.select(this).style('cursor','grab')}));
+})();
+
+/* education timeline */
+(function(){
+  const E=[
+    {y:2025,t:'Máster en Análisis y Visualización de Datos Masivos (Visual Analytics and Big Data)',o:'UNIR, España · terminado en 2024, título oficial 2025',k:'T'},
+    {y:2025,t:'Privacy and Data Protection',o:'Certificación corporativa',k:'C'},
+    {y:2025,t:'Information Security Awareness',o:'Certificación corporativa',k:'C'},
+    {y:2025,t:'SAP Navigation (ERPSAP101)',o:'SAP',k:'C'},
+    {y:2024,t:'Programación en Python (75 h)',o:'UNIR',k:'C'},
+    {y:2023,t:'Leadership (45 h)',o:'Miami International University',k:'C'},
+    {y:2022,t:'Build Basic Generative Adversarial Networks (GANs)',o:'DeepLearning.AI · Coursera',k:'C'},
+    {y:2021,t:'Deep Learning Specialization (5 cursos)',o:'DeepLearning.AI · Coursera',k:'C'},
+    {y:2020,t:'Machine Learning',o:'Stanford University · Coursera',k:'C'},
+    {y:2020,t:'Diplomado en Inteligencia Artificial',o:'Universidad Nacional de Colombia',k:'C'},
+    {y:2019,t:'Deep Learning e Inteligencia Artificial',o:'Universidad Nacional de Colombia',k:'C'},
+    {y:2018,t:'Ingeniero de Sonido',o:'Universidad de San Buenaventura, Bogotá',k:'T'}
+  ];
+  const svg=d3.select('#tledu'), W=760, top=24, step=44, ax=78;
+  svg.attr('viewBox',`0 0 ${W} ${top+E.length*step}`);
+  svg.append('line').attr('x1',ax).attr('x2',ax).attr('y1',top-8).attr('y2',top+(E.length-1)*step+8).attr('stroke','var(--rule)').attr('stroke-width',2);
+  let prev=null;
+  E.forEach((e,i)=>{
+    const y=top+i*step, g=svg.append('g').attr('tabindex',0);
+    if(e.y!==prev) g.append('text').attr('x',ax-18).attr('y',y+5).attr('text-anchor','end').attr('font-size',13).attr('font-weight',600).attr('fill','var(--ink)').text(e.y);
+    prev=e.y;
+    const c=g.append('circle').attr('cx',ax).attr('cy',y).attr('r',e.k==='T'?9:6).attr('fill',e.k==='T'?'var(--accent)':'var(--s2)').attr('stroke','var(--surface)').attr('stroke-width',2);
+    const t=g.append('text').attr('x',ax+20).attr('y',y).attr('font-size',13).attr('font-weight',e.k==='T'?700:500).attr('fill','var(--ink)').text(e.t);
+    g.append('text').attr('x',ax+20).attr('y',y+16).attr('font-size',11).attr('fill','var(--muted)').text(e.o);
+    g.on('mouseenter focus',()=>{c.attr('r',e.k==='T'?12:9);t.attr('fill','var(--accent)')}).on('mouseleave blur',()=>{c.attr('r',e.k==='T'?9:6);t.attr('fill','var(--ink)')});
+  });
+})();
+
+document.getElementById('copy').addEventListener('click',function(){
+  const b=this; const sel=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('mail'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Correo seleccionado'};
+  try{navigator.clipboard.writeText('ardilupus@gmail.com').then(()=>{b.textContent='Correo copiado';setTimeout(()=>b.textContent='Copiar correo',2000)},sel)}catch(e){sel()}
+});
+})();
+</script>
+
+</body>
+</html>
