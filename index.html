@@ -13,7 +13,7 @@
 :root{
   --bg:#f5f6f9; --surface:#ffffff; --ink:#171c2e; --muted:#535a70; --rule:#dadde7;
   --accent:#4a3c9c; --accent-soft:#e8e5f6; --alert:#c2410c; --alert-soft:#fbe7dc; --ok:#1f7a55;
-  --s2:#2f7f9a; --s3:#b0832a; --s4:#8a4f7d;
+  --s2:#2f7f9a; --s3:#b0832a; --s4:#8a4f7d; --s5:#3d8a4a;
   --display:"Schibsted Grotesk","Segoe UI",system-ui,sans-serif;
   --body:"Public Sans","Segoe UI",system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
@@ -21,11 +21,11 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#10121c; --surface:#181b29; --ink:#e7e8f0; --muted:#a2a7bd; --rule:#2c3044;
   --accent:#a99cf2; --accent-soft:#2a2550; --alert:#ff9a62; --alert-soft:#3a2216; --ok:#5fd2a0;
-  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; color-scheme:dark}}
+  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; --s5:#7fcf8c; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#10121c; --surface:#181b29; --ink:#e7e8f0; --muted:#a2a7bd; --rule:#2c3044;
   --accent:#a99cf2; --accent-soft:#2a2550; --alert:#ff9a62; --alert-soft:#3a2216; --ok:#5fd2a0;
-  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; color-scheme:dark}
+  --s2:#6cc3df; --s3:#e3b85c; --s4:#d48fc4; --s5:#7fcf8c; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 16.5px/1.62 var(--body);margin:0;
@@ -104,6 +104,7 @@ svg text{font-family:var(--mono)}
 
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .tabs button{font:500 .85rem var(--body);padding:7px 12px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.tabs.sm button{font-size:.78rem;padding:5px 10px}
 .tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .quote{font:500 1.05rem/1.45 var(--body);margin-top:14px;padding-left:12px;border-left:3px solid var(--accent)}
 .votes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:14px}
@@ -125,6 +126,23 @@ svg text{font-family:var(--mono)}
 .step.hot{border-color:var(--accent);background:var(--accent-soft)}
 .iban{font:500 1rem var(--mono);letter-spacing:.06em;margin-top:12px;word-break:break-all}
 .iban mark{background:var(--accent);color:var(--bg);border-radius:3px;padding:0 1px}
+.flow{list-style:none;padding:0;margin:12px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.flow li{border:1px solid var(--rule);border-radius:8px;padding:8px;font-size:.78rem;min-width:0;position:relative;background:var(--surface)}
+.flow li+li::before{content:"→";position:absolute;left:-15px;top:50%;transform:translateY(-50%);color:var(--muted);font:600 .9rem var(--mono)}
+.flow b{display:block;font-size:.8rem;margin-bottom:3px}
+.flow span{color:var(--muted)}
+.flow li.db{border-color:var(--s2)} .flow li.db b{color:var(--s2)}
+.flow li.hot{border-color:var(--accent);background:var(--accent-soft)}
+.shot{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.phone-shot{border:2px solid var(--ink);border-radius:14px;padding:10px 12px;width:170px;font-size:.8rem;background:var(--bg)}
+.phone-shot p{display:flex;justify-content:space-between;gap:8px;padding-block:3px;border-bottom:1px dashed var(--rule)}
+.phone-shot p.ps-h{display:block;font-weight:600;border:0;margin-bottom:2px}
+.phone-shot b{font:600 .8rem var(--mono)}
+.shot .arrow{font:600 1.3rem var(--mono);color:var(--accent)}
+.xl{flex:1;min-width:240px;border:1px solid var(--ok);border-radius:6px;overflow:hidden;font:400 .75rem var(--mono)}
+.xl>div{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr .7fr}
+.xl span{padding:6px;border-right:1px solid var(--rule);font-variant-numeric:tabular-nums}
+.xl .xh{background:var(--ok);color:var(--bg);font-weight:500}
 .batches{display:grid;grid-template-columns:repeat(40,minmax(0,1fr));gap:2px;margin-top:12px}
 .batches i{display:block;aspect-ratio:1;border-radius:2px;background:var(--rule)}
 .batches i.on{background:var(--accent)}
@@ -169,6 +187,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
   .case{grid-template-columns:1fr;gap:20px}
   .job{grid-template-columns:1fr;gap:4px}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow{grid-template-columns:1fr;gap:14px}
+  .flow li+li::before{content:"↓";left:50%;top:-14px;transform:translateX(-50%)}
 }
 @media (max-width:560px){
   .hero{grid-template-columns:1fr;gap:20px}
@@ -204,7 +224,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <p class="lead">Ingeniero y MSc. en Visual Analytics y Big Data. Construyo pipelines, tableros y sistemas de IA que encuentran anomalías a tiempo: en un cultivo, en una tesorería o en miles de comentarios de clientes.</p>
     <div class="links">
       <a class="btn pri" href="#casos">Ver casos</a>
-      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo-893984a7/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
@@ -254,9 +274,10 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     </div>
     <div class="inst">
       <h3>Conductividad eléctrica diaria de una válvula (mS/cm) <span class="tagd">simulado</span></h3>
-      <p class="sub">Arrastre en la franja de abajo para elegir el periodo que quiere ver</p>
+      <p class="sub">Mueva el umbral y arrastre en la franja de abajo para elegir el periodo</p>
       <svg id="ce" class="chart" viewBox="0 0 560 300" role="img" aria-label="Conductividad diaria con selector de periodo"></svg>
       <div class="ctrl">
+        <label for="thr">Umbral de alerta <input id="thr" type="range" min="1.4" max="2.2" step="0.05" value="1.6"><output id="thrv">1,60</output></label>
         <label for="beds">Camas afectadas <input id="beds" type="range" min="1" max="20" step="1" value="3"><output id="bedsv">3</output></label>
       </div>
       <div class="readout">
@@ -265,7 +286,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <div class="ro"><small>Días fuera de rango</small><span id="over">—</span></div>
         <div class="ro"><small>Producción protegida</small><span id="kg">—</span></div>
       </div>
-      <p class="note">Umbral de alerta: 1,60 mS/cm. Producción = camas × 100 plantas × 4 kg.</p>
+      <p class="note">Los puntos naranjas superan el umbral y disparan la alerta. Producción = camas × 100 plantas × 4 kg.</p>
     </div>
   </article>
 
@@ -306,22 +327,17 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       <p>Los bancos vivían en SAP y el equipo los buscaba en archivos de Excel con macros, donde un dígito mal escrito dañaba un pago. Diseñé y lideré el reemplazo: Python descarga los bancos de SAP, Power Automate los carga y una app de Power Apps guía la búsqueda.</p>
       <ul>
         <li>Power Apps no carga más de 5.000 registros a la vez: Power Automate los sube por lotes con paginación y validaciones, y parte en bloques para no superar el límite de 100.000 que generaba rechazos.</li>
-        <li>Cuatro regiones (EMEA, LATAM, APAC e India), cada país con sus campos obligatorios y su forma de identificar el banco.</li>
+        <li>Regiones LATAM, EMEA y APAC (con India), cada país con sus campos obligatorios y su forma de identificar el banco: SWIFT, IBAN o código local.</li>
         <li>Cada mes, Python compara SAP con la lista, alerta los bancos nuevos y genera un archivo de importación con solo esos cambios.</li>
         <li>Los usuarios tienen acceso de solo lectura: filtran y buscan, pero no pueden editar ni borrar bancos.</li>
       </ul>
       <p class="value"><b>Resultado:</b> se eliminaron el Excel y sus errores de dígitos, y la búsqueda del banco correcto pasó a tomar segundos.</p>
     </div>
     <div class="inst">
-      <h3>Cómo la app identifica el banco en cada país <span class="tagd">ejemplo</span></h3>
-      <p class="sub">Elija un país</p>
-      <div class="tabs" role="group" aria-label="Países" id="bk-tabs">
-        <button type="button" data-k="co" aria-pressed="true">Colombia</button>
-        <button type="button" data-k="br" aria-pressed="false">Brasil</button>
-        <button type="button" data-k="fr" aria-pressed="false">Francia</button>
-        <button type="button" data-k="jp" aria-pressed="false">Japón</button>
-        <button type="button" data-k="cn" aria-pressed="false">China</button>
-      </div>
+      <h3>Cómo la app identifica el banco en cada región <span class="tagd">ejemplo</span></h3>
+      <p class="sub">Elija una región y luego un país</p>
+      <div class="tabs" role="group" aria-label="Regiones" id="bk-reg"></div>
+      <div class="tabs sm" role="group" aria-label="Países" id="bk-tabs"></div>
       <div class="steps" id="bk-steps"></div>
       <div id="bk-extra"></div>
       <h3 style="margin-top:20px">Carga de 1.200.000 bancos en lotes de 5.000</h3>
@@ -368,6 +384,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>Base para una herramienta para reclutadores: leer hojas de vida contra un perfil y preparar preguntas de entrevista.</li>
       </ul>
       <p class="value"><b>Valor:</b> ninguna oferta relevante se pierde, y cada postulación sale ajustada a la vacante.</p>
+      <p><a href="https://github.com/ardilupus/agente-empleo" target="_blank" rel="noopener">Ver el código en GitHub</a></p>
     </div>
     <div class="inst">
       <h3>Ofertas enviadas por Telegram, por mes y portal <span class="tagd real">datos reales</span></h3>
@@ -382,6 +399,14 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <div class="ro"><small>Pasan al agente</small><span id="mpass">—</span></div>
         <div class="ro"><small>Revisión manual evitada</small><span id="msave">—</span></div>
       </div>
+      <h3 style="margin-top:20px">Flujo de datos de la siguiente versión</h3>
+      <ol class="flow" aria-label="Flujo de datos">
+        <li><b>Scraping</b><span>5 portales, intervalos aleatorios</span></li>
+        <li class="db"><b>MongoDB: ofertas</b><span>todas las ofertas como documentos JSON</span></li>
+        <li><b>Match con embeddings</b><span>oferta frente a hoja de vida</span></li>
+        <li class="db"><b>MongoDB: ofertas con match ≥ 80%</b><span>con puntaje y brechas detectadas</span></li>
+        <li class="hot"><b>Agente + Telegram</b><span>ajustes sugeridos a la hoja de vida</span></li>
+      </ol>
     </div>
   </article>
 
@@ -446,6 +471,44 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       <h3>Tiempo operativo del proceso de tesorería (índice, antes = 100)</h3>
       <p class="sub">Resultado de automatizar validaciones y flujos ETL</p>
       <svg id="tm" class="chart" viewBox="0 0 560 130" role="img" aria-label="El tiempo operativo bajó de 100 a 5"></svg>
+    </div>
+  </article>
+  <article class="case">
+    <div class="txt">
+      <p class="lbl">Marketing de influencers · Asylum marketing</p>
+      <h3>De capturas de pantalla a un pipeline de métricas de influencers</h3>
+      <p>Los influencers reportaban sus resultados como capturas de pantalla: alcance, visualizaciones, interacciones. Construí un pipeline en Python que lee esas imágenes, extrae las cifras y las centraliza en Excel, Google Sheets y Snowflake para analizarlas.</p>
+      <ul>
+        <li>Se acaba la digitación manual de cada captura y sus errores.</li>
+        <li>Con los datos centralizados se compara el alcance, las interacciones y el engagement rate de cada influencer por publicación.</li>
+        <li>El diagrama de caja muestra quién es constante, quién depende de una publicación viral y cuáles son los valores atípicos.</li>
+      </ul>
+      <p class="value"><b>Valor:</b> decidir con quién seguir invirtiendo según su rendimiento típico, no según su mejor publicación.</p>
+    </div>
+    <div class="inst">
+      <h3>De la captura al Excel <span class="tagd">ejemplo</span></h3>
+      <div class="shot">
+        <div class="phone-shot" aria-label="Captura de ejemplo">
+          <p class="ps-h">Estadísticas de la publicación</p>
+          <p><span>Alcance</span><b>18.420</b></p>
+          <p><span>Visualizaciones</span><b>26.910</b></p>
+          <p><span>Interacciones</span><b>1.143</b></p>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="xl" role="table" aria-label="Fila extraída">
+          <div role="row" class="xh"><span>Influencer</span><span>Alcance</span><span>Visual.</span><span>Interac.</span><span>ER</span></div>
+          <div role="row"><span>Influencer 2</span><span>18.420</span><span>26.910</span><span>1.143</span><span>6,2%</span></div>
+        </div>
+      </div>
+      <h3 style="margin-top:20px" id="bx-title">Alcance por publicación de cada influencer</h3>
+      <p class="sub">Caja: 50% central de las publicaciones · línea: mediana · puntos naranjas: valores atípicos</p>
+      <div class="tabs" role="group" aria-label="Métrica" id="bx-tabs">
+        <button type="button" data-k="a" aria-pressed="true">Alcance</button>
+        <button type="button" data-k="i" aria-pressed="false">Interacciones</button>
+        <button type="button" data-k="e" aria-pressed="false">Engagement rate</button>
+      </div>
+      <svg id="box" class="chart" viewBox="0 0 560 300" role="img" aria-label="Diagrama de caja por influencer"></svg>
+      <p class="note">Datos simulados: 14 publicaciones por influencer.</p>
     </div>
   </article>
 </section>
@@ -515,14 +578,14 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <div><h3>Datos estructurados y no estructurados</h3><div class="chips"><span>NoSQL</span><span>MongoDB</span><span>JSON</span><span>Neo4j</span><span>Modelo estrella</span><span>Copo de nieve</span><span>Gobierno del dato</span></div></div>
     <div><h3>Extracción y automatización</h3><div class="chips"><span>Playwright</span><span>Selenium</span><span>BeautifulSoup</span><span>Power Automate</span><span>Power Apps</span><span>SAP HANA</span><span>Telegram API</span></div></div>
     <div><h3>IA generativa</h3><div class="chips"><span>LangChain</span><span>RAG</span><span>Embeddings</span><span>Ollama</span><span>Gemini</span><span>OpenAI</span><span>Claude</span><span>NLP</span></div></div>
-    <div><h3>Visualización y BI</h3><div class="chips"><span>Power BI</span><span>Tableau</span><span>Looker</span><span>Adobe Analytics</span><span>Streamlit</span><span>D3.js</span></div></div>
+    <div><h3>Visualización y BI</h3><div class="chips"><span>Power BI</span><span>Tableau</span><span>Looker</span><span>Adobe Analytics</span><span>Streamlit</span><span>D3.js</span><span>SCImago Graphica</span></div></div>
     <div><h3>Análisis</h3><div class="chips"><span>Detección de anomalías</span><span>Control de fraude</span><span>Calidad de datos</span><span>Modelado de KPIs</span><span>Proyecciones estadísticas</span><span>Machine Learning</span><span>Deep Learning</span></div></div>
   </div>
   <div class="graphwrap">
-    <h3>Proyectos y tecnologías, como grafo</h3>
+    <h3>Proyectos y tecnologías</h3>
     <p class="sub" style="font:400 .78rem var(--mono);color:var(--muted);margin-top:4px">Pase el cursor o toque un nodo para ver sus conexiones; puede arrastrarlos</p>
-    <svg id="graph" viewBox="0 0 900 520" role="img" aria-label="Grafo de proyectos y tecnologías"></svg>
-    <div class="legend"><span><i style="background:var(--accent)"></i>Proyecto</span><span><i style="background:var(--s2)"></i>Datos y NoSQL</span><span><i style="background:var(--s3)"></i>Automatización</span><span><i style="background:var(--s4)"></i>IA</span></div>
+    <svg id="graph" viewBox="0 0 900 1080" role="img" aria-label="Grafo de proyectos y tecnologías"></svg>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Proyecto</span><span><i style="background:var(--s2)"></i>SQL y NoSQL</span><span><i style="background:var(--s5)"></i>Visualización</span><span><i style="background:var(--s3)"></i>Automatización</span><span><i style="background:var(--s4)"></i>IA</span><span><i style="background:var(--muted)"></i>Gobernanza</span><span>Círculo hueco: categoría</span></div>
   </div>
 </section>
 
@@ -537,7 +600,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
   <div class="contact">
     <div>
       <p class="lbl">Contacto</p>
-      <h2 style="margin-top:10px">Resuelvo problemas que no sabes que tienes, antes de que se vuelvan una bola de nieve.</h2>
+      <h2 style="margin-top:10px">Resuelvo problemas que no sabes que tienes, antes de que frenen tu crecimiento.</h2>
       <p class="mail" id="mail" style="margin-top:14px">ardilupus@gmail.com</p>
       <div class="cinfo">
         <p>WhatsApp y teléfono: +57 301 768 5097</p>
@@ -547,7 +610,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <div class="links">
       <button class="btn pri" id="copy" type="button">Copiar correo</button>
       <a class="btn" href="https://wa.me/573017685097" target="_blank" rel="noopener">WhatsApp</a>
-      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo-893984a7/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
@@ -575,16 +638,17 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 
 /* blueberries with brush */
 (function(){
-  const r=rng(42), days=120, T=1.6, start=new Date(2021,1,1);
+  const r=rng(42), days=120, start=new Date(2021,1,1); let T=1.6;
   const data=d3.range(days).map(i=>{let v=1.18+Math.sin(i/9)*.06+(r()-.5)*.1; if(i>=70) v+=(i-70)*.028; if(i>=96) v-=(i-96)*.024; return {t:d3.timeDay.offset(start,i), v:+v.toFixed(3)}});
   const W=560,m={l:44,r:16}, H1=200, y1=14, y2=H1-26, bTop=236, bBot=286;
   const svg=d3.select('#ce');
   const x=d3.scaleTime().range([m.l,W-m.r]), xb=d3.scaleTime(d3.extent(data,d=>d.t),[m.l,W-m.r]);
   const y=d3.scaleLinear([0.9,2.4],[y2,y1]), yb=d3.scaleLinear([0.9,2.4],[bBot,bTop]);
   svg.append('defs').append('clipPath').attr('id','ceclip').append('rect').attr('x',m.l).attr('y',y1).attr('width',W-m.l-m.r).attr('height',y2-y1);
-  svg.append('rect').attr('x',m.l).attr('y',y1).attr('width',W-m.l-m.r).attr('height',y(T)-y1).attr('fill','var(--alert-soft)');
-  svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('y1',y(T)).attr('y2',y(T)).attr('stroke','var(--alert)').attr('stroke-dasharray','4 4');
-  svg.append('text').attr('x',W-m.r).attr('y',y(T)-6).attr('text-anchor','end').attr('font-size',11).attr('fill','var(--alert)').text('umbral 1,60');
+  const band=svg.append('rect').attr('x',m.l).attr('y',y1).attr('width',W-m.l-m.r).attr('fill','var(--alert-soft)');
+  const tline=svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('stroke','var(--alert)').attr('stroke-width',1.5).attr('stroke-dasharray','4 4');
+  const tlab=svg.append('text').attr('x',W-m.r).attr('text-anchor','end').attr('font-size',11).attr('font-weight',500).attr('fill','var(--alert)');
+  const bline=svg.append('line').attr('x1',m.l).attr('x2',W-m.r).attr('stroke','var(--alert)').attr('stroke-dasharray','3 3');
   const gx=svg.append('g').attr('transform',`translate(0,${y2})`);
   svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(f2)).call(axisStyle);
   const plot=svg.append('g').attr('clip-path','url(#ceclip)');
@@ -595,9 +659,11 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   // context
   svg.append('path').datum(data).attr('d',d3.area().x(d=>xb(d.t)).y0(bBot).y1(d=>yb(d.v))).attr('fill','var(--accent-soft)').attr('stroke','var(--accent)').attr('stroke-width',1);
   svg.append('g').attr('transform',`translate(0,${bBot})`).call(d3.axisBottom(xb).ticks(d3.timeMonth.every(1)).tickFormat(d=>meses[d.getMonth()]+' 2021')).call(axisStyle);
-  const beds=document.getElementById('beds');
+  const beds=document.getElementById('beds'), thr=document.getElementById('thr');
   let sel=[data[45].t,data[110].t];
   function draw(){
+    T=+thr.value; document.getElementById('thrv').textContent=f2(T);
+    band.attr('height',y(T)-y1); tline.attr('y1',y(T)).attr('y2',y(T)); tlab.attr('y',y(T)-6).text('umbral '+f2(T)); bline.attr('y1',yb(T)).attr('y2',yb(T));
     x.domain(sel);
     const vis=data.filter(d=>d.t>=sel[0]&&d.t<=sel[1]);
     gx.call(d3.axisBottom(x).ticks(5).tickFormat(fd)).call(axisStyle);
@@ -616,7 +682,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   const brush=d3.brushX().extent([[m.l,bTop-4],[W-m.r,bBot]]).on('brush end',e=>{if(e.selection){sel=e.selection.map(xb.invert); if(sel[1]-sel[0]<5*864e5) sel[1]=d3.timeDay.offset(sel[0],5); draw();}});
   const bg=svg.append('g').call(brush).call(brush.move,sel.map(xb));
   bg.selectAll('.selection').attr('fill','var(--accent)').attr('fill-opacity',.18).attr('stroke','var(--accent)');
-  beds.addEventListener('input',draw); draw();
+  beds.addEventListener('input',draw); thr.addEventListener('input',draw); draw();
 })();
 
 /* fraud */
@@ -641,20 +707,35 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 
 /* banks */
 (function(){
-  const C={
-    co:{steps:[['Región','LATAM'],['País y datos','Colombia: cédula, dirección y correo'],['Banco','Elige el banco en la lista'],['Validación','El código SWIFT se completa solo'],['Resumen','Se revisa y se envía el caso por correo']]},
-    br:{steps:[['Región','LATAM'],['País y datos','Brasil: CPF y datos de contacto'],['Banco','Más de 70.000 registros: código del banco, ej. Itaú 341'],['Validación','Se pide la agencia de 4 dígitos y se valida la pareja'],['Resumen','Se revisa y se envía el caso por correo']]},
-    fr:{steps:[['Región','EMEA'],['País y datos','Francia: código postal obligatorio'],['Banco','El cliente escribe su IBAN de 27 caracteres'],['Validación','Se extraen los 10 dígitos de banco y agencia y se cruzan con la lista'],['Resumen','Se revisa y se envía el caso por correo']], iban:true},
-    jp:{steps:[['Región','APAC'],['País y datos','Japón: el código postal es clave'],['Banco','Más de 40.000 registros: código del banco'],['Validación','Se pide el código de sucursal y se valida la pareja'],['Resumen','Se revisa y se envía el caso por correo']]},
-    cn:{steps:[['Región','APAC'],['País y datos','China: datos de contacto'],['Banco','Más de 170.000 registros: el cliente conoce el código de su banco'],['Validación','El código encuentra el banco exacto al instante'],['Resumen','Se revisa y se envía el caso por correo']]}
+  const S='Se revisa y se envía el caso por correo';
+  const R={
+    LATAM:{n:'Bancos de América Latina. La llave es el código SWIFT o el código local del banco.',c:{
+      Colombia:{steps:[['Región','LATAM'],['País y datos','Colombia: cédula, dirección y correo'],['Banco','Elige su banco en la lista, ej. Nu'],['Validación','El código SWIFT se completa solo'],['Resumen',S]]},
+      Brasil:{steps:[['Región','LATAM'],['País y datos','Brasil: CPF y datos de contacto'],['Banco','Más de 70.000 registros: busca por nombre o código, ej. Itaú 341'],['Validación','Elige la sucursal y la app confirma que exista en la lista'],['Resumen',S]]}}},
+    EMEA:{n:'Europa usa IBAN: la app lo lee, extrae el código del banco y lo cruza con la llave del banco (Bank Key), que es única por país.',c:{
+      Francia:{steps:[['Región','EMEA'],['País y datos','Francia: código postal obligatorio'],['Banco','Escribe su IBAN de 27 caracteres'],['Validación','Se extraen banco y agencia y se cruzan con la Bank Key'],['Resumen',S]],iban:['FR76',[['3000 6','banco'],['000 01','agencia']],'12 3456 7890 189','Posiciones 5 a 14: banco (5) y agencia (5).']},
+      'España':{steps:[['Región','EMEA'],['País y datos','España: documento y código postal'],['Banco','Escribe su IBAN de 24 caracteres, que contiene la cuenta de 20 dígitos'],['Validación','Se extraen entidad y oficina y se cruzan con la Bank Key'],['Resumen',S]],iban:['ES91 ',[['2100','entidad'],[' 0418','oficina']],' 4502 0005 1332','Posiciones 5 a 12: entidad (4) y oficina (4).']},
+      Italia:{steps:[['Región','EMEA'],['País y datos','Italia: código fiscal y código postal'],['Banco','Escribe su IBAN de 27 caracteres'],['Validación','Se extraen ABI y CAB y se cruzan con la Bank Key'],['Resumen',S]],iban:['IT60 X',[['054 28','ABI'],['11 101','CAB']],'0 0000 0123 456','Posiciones 6 a 15: ABI del banco (5) y CAB de la agencia (5).']}}},
+    APAC:{n:'Asia y Pacífico: cada país tiene su propio código de banco, que el cliente conoce.',c:{
+      'Japón':{steps:[['Región','APAC'],['País y datos','Japón: el código postal es clave'],['Banco','Más de 40.000 registros: código del banco'],['Validación','Se agrega el código de sucursal y la app encuentra el banco exacto'],['Resumen',S]]},
+      China:{steps:[['Región','APAC'],['País y datos','China: datos de contacto'],['Banco','Más de 170.000 registros: el cliente digita el código de su banco'],['Validación','El código encuentra el banco exacto al instante'],['Resumen',S]]}}}
   };
-  const btns=[...document.querySelectorAll('#bk-tabs button')];
-  function show(k){
-    btns.forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
-    document.getElementById('bk-steps').innerHTML=C[k].steps.map((s,i)=>`<div class="step${i===2||i===3?' hot':''}"><b>${s[0]}</b>${s[1]}</div>`).join('');
-    document.getElementById('bk-extra').innerHTML=C[k].iban?'<p class="iban" aria-label="IBAN de ejemplo">FR76 <mark>3000 6</mark><mark>000 01</mark>12 3456 7890 189</p><p class="note">IBAN de ejemplo público. Resaltados: código de banco y de agencia (posiciones 5 a 14), que se cruzan con la llave del banco.</p>':'';
+  const reg=document.getElementById('bk-reg'), tabs=document.getElementById('bk-tabs');
+  function country(r,k){
+    [...tabs.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===k));
+    const c=R[r].c[k];
+    document.getElementById('bk-steps').innerHTML=c.steps.map((s,i)=>`<div class="step${i===2||i===3?' hot':''}"><b>${s[0]}</b>${s[1]}</div>`).join('');
+    document.getElementById('bk-extra').innerHTML=`<p class="note" style="font-size:.8rem">${R[r].n}</p>`+(c.iban?`<p class="iban" aria-label="IBAN de ejemplo">${c.iban[0]}${c.iban[1].map(p=>`<mark title="${p[1]}">${p[0]}</mark>`).join('')}${c.iban[2]}</p><p class="note">IBAN de ejemplo público. ${c.iban[3]}</p>`:'');
   }
-  btns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.k))); show('co');
+  function region(r){
+    [...reg.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===r));
+    tabs.innerHTML=Object.keys(R[r].c).map(k=>`<button type="button" aria-pressed="false">${k}</button>`).join('');
+    [...tabs.children].forEach(b=>b.addEventListener('click',()=>country(r,b.textContent)));
+    country(r,Object.keys(R[r].c)[0]);
+  }
+  reg.innerHTML=Object.keys(R).map(r=>`<button type="button" aria-pressed="false">${r}</button>`).join('');
+  [...reg.children].forEach(b=>b.addEventListener('click',()=>region(b.textContent)));
+  region('LATAM');
   const box=document.getElementById('bk-batches'), N=240;
   box.innerHTML=d3.range(N).map(i=>`<i class="on${(i+1)%20===0?' cut':''}"></i>`).join('');
   const cells=[...box.children], out=document.getElementById('bk-count');
@@ -779,6 +860,41 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   sS.addEventListener('change',draw); sL.addEventListener('change',draw); draw();
 })();
 
+
+/* influencer box plot */
+(function(){
+  const r=rng(21), names=['Influencer 1','Influencer 2','Influencer 3','Influencer 4'];
+  const prof=[{m:9000,s:.35,o:[31000]},{m:16000,s:.25,o:[4200,39000]},{m:6000,s:.6,o:[]},{m:22000,s:.2,o:[52000]}];
+  const gauss=()=>{let u=0;for(let k=0;k<6;k++)u+=r();return (u-3)/Math.sqrt(.5)};
+  const D=names.map((n,i)=>{const p=prof[i]; const a=d3.range(14-p.o.length).map(()=>Math.round(p.m*Math.exp(gauss()*p.s))).concat(p.o);
+    const er=a.map(()=>+(2.5+i*.8+gauss()*0.9+(i===2?1.5:0)).toFixed(1)); er[0]=+(er[0]+ (i===1?5:0)).toFixed(1);
+    return {n, a, i:a.map((v,k)=>Math.round(v*er[k]/100)), e:er};});
+  const M={a:['Alcance por publicación de cada influencer',f0],i:['Interacciones por publicación de cada influencer',f0],e:['Engagement rate por publicación de cada influencer (%)',v=>f1(v)+'%']};
+  const W=560,H=300,m={l:58,r:16,t:14,b:34}, svg=d3.select('#box');
+  const x=d3.scaleBand(names,[m.l,W-m.r]).padding(.38);
+  function show(k){
+    [...document.querySelectorAll('#bx-tabs button')].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+    document.getElementById('bx-title').textContent=M[k][0]; svg.selectAll('*').remove();
+    const all=D.flatMap(d=>d[k]); const y=d3.scaleLinear([0,d3.max(all)*1.08],[H-m.b,m.t]).nice();
+    svg.append('g').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(v=>k==='e'?v+'%':d3.format('~s')(v))).call(axisStyle);
+    svg.append('g').attr('transform',`translate(0,${H-m.b})`).call(d3.axisBottom(x)).call(axisStyle).call(g=>g.selectAll('text').attr('fill','var(--ink)').attr('font-size',11));
+    D.forEach((d,i)=>{
+      const v=d[k].slice().sort(d3.ascending), q1=d3.quantile(v,.25), q2=d3.quantile(v,.5), q3=d3.quantile(v,.75), iq=q3-q1;
+      const lo=d3.min(v.filter(t=>t>=q1-1.5*iq)), hi=d3.max(v.filter(t=>t<=q3+1.5*iq)), out=v.filter(t=>t<lo||t>hi);
+      const cx=x(d.n)+x.bandwidth()/2, bw=x.bandwidth(), g=svg.append('g');
+      g.append('line').attr('x1',cx).attr('x2',cx).attr('y1',y(lo)).attr('y2',y(hi)).attr('stroke','var(--muted)');
+      [lo,hi].forEach(t=>g.append('line').attr('x1',cx-bw/4).attr('x2',cx+bw/4).attr('y1',y(t)).attr('y2',y(t)).attr('stroke','var(--muted)'));
+      g.append('rect').attr('x',cx-bw/2).attr('width',bw).attr('y',y(q3)).attr('height',Math.max(1,y(q1)-y(q3))).attr('rx',3).attr('fill','var(--accent-soft)').attr('stroke','var(--accent)');
+      g.append('line').attr('x1',cx-bw/2).attr('x2',cx+bw/2).attr('y1',y(q2)).attr('y2',y(q2)).attr('stroke','var(--accent)').attr('stroke-width',2.5);
+      g.append('text').attr('x',cx+bw/2+4).attr('y',y(q2)+4).attr('font-size',10.5).attr('font-weight',600).attr('fill','var(--ink)').text(M[k][1](q2));
+      const j=rng(30+i); g.selectAll('circle.p').data(v.filter(t=>t>=lo&&t<=hi)).join('circle').attr('cx',()=>cx+(j()-.5)*bw*.6).attr('cy',t=>y(t)).attr('r',2.6).attr('fill','var(--ink)').attr('opacity',.35);
+      out.forEach(t=>{g.append('circle').attr('cx',cx).attr('cy',y(t)).attr('r',4.5).attr('fill','var(--alert)');
+        g.append('text').attr('x',cx+8).attr('y',y(t)+4).attr('font-size',10.5).attr('fill','var(--alert)').text(M[k][1](t));});
+    });
+  }
+  document.querySelectorAll('#bx-tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.k))); show('a');
+})();
+
 /* time index */
 (function(){
   const data=[{k:'Antes de automatizar',v:100},{k:'Después de automatizar',v:5}];
@@ -828,36 +944,55 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 
 /* graph */
 (function(){
-  const P='var(--accent)', Dn='var(--s2)', Au='var(--s3)', Ai='var(--s4)';
-  const nodes=[
-    ['Arándanos','p'],['Validación Delta','p'],['App de bancos','p'],['Sentimiento catering','p'],['Agente de empleo','p'],['Extractor de comentarios','p'],['Ranking TFM','p'],['BI Asylum','p'],
-    ['Python','a'],['SQL','d'],['MongoDB · NoSQL','d'],['JSON','d'],['Neo4j','d'],['Snowflake','d'],['Modelo estrella','d'],['SAP HANA','d'],
-    ['Power Automate','a'],['Power Apps','a'],['Selenium','a'],['Playwright','a'],['Telegram API','a'],
-    ['LangChain','i'],['Embeddings · RAG','i'],['LLMs locales y API','i'],['Power BI','d']
-  ].map(([id,g])=>({id,g}));
-  const L=[['Arándanos','Python'],['Arándanos','SQL'],['Arándanos','Telegram API'],
-    ['Validación Delta','Python'],['Validación Delta','SAP HANA'],['Validación Delta','SQL'],
-    ['App de bancos','Python'],['App de bancos','SAP HANA'],['App de bancos','Power Automate'],['App de bancos','Power Apps'],
-    ['Sentimiento catering','LangChain'],['Sentimiento catering','LLMs locales y API'],['Sentimiento catering','Python'],['Sentimiento catering','JSON'],
-    ['Agente de empleo','Selenium'],['Agente de empleo','Python'],['Agente de empleo','Telegram API'],['Agente de empleo','MongoDB · NoSQL'],['Agente de empleo','Embeddings · RAG'],['Agente de empleo','LangChain'],
-    ['Extractor de comentarios','Playwright'],['Extractor de comentarios','JSON'],['Extractor de comentarios','LLMs locales y API'],['Extractor de comentarios','MongoDB · NoSQL'],['Extractor de comentarios','Python'],
-    ['Ranking TFM','Python'],['Ranking TFM','SQL'],['Ranking TFM','Power BI'],
-    ['BI Asylum','Snowflake'],['BI Asylum','Modelo estrella'],['BI Asylum','Python'],['BI Asylum','SQL'],['BI Asylum','Neo4j'],
-    ['JSON','MongoDB · NoSQL'],['Embeddings · RAG','LangChain'],['LangChain','LLMs locales y API']].map(([s,t])=>({source:s,target:t}));
-  const color={p:P,d:Dn,a:Au,i:Ai};
-  const W=900,H=520, svg=d3.select('#graph');
-  const sim=d3.forceSimulation(nodes).force('link',d3.forceLink(L).id(d=>d.id).distance(d=>d.source.g==='p'?90:70))
-    .force('charge',d3.forceManyBody().strength(-380)).force('center',d3.forceCenter(W/2,H/2)).force('collide',d3.forceCollide(46)).force('x',d3.forceX(W/2).strength(.04)).force('y',d3.forceY(H/2).strength(.07)).stop();
-  for(let i=0;i<400;i++) sim.tick();
-  nodes.forEach(n=>{n.x=Math.max(70,Math.min(W-70,n.x)); n.y=Math.max(24,Math.min(H-24,n.y));});
-  const link=svg.append('g').selectAll('line').data(L).join('line').attr('stroke','var(--rule)').attr('stroke-width',1.4);
-  const node=svg.append('g').selectAll('g').data(nodes).join('g').style('cursor','grab').attr('tabindex',0);
-  node.append('circle').attr('r',d=>d.g==='p'?11:7).attr('fill',d=>color[d.g]).attr('stroke','var(--surface)').attr('stroke-width',2);
-  node.append('text').attr('x',d=>d.g==='p'?15:11).attr('y',4).attr('font-size',d=>d.g==='p'?12.5:11.5).attr('font-weight',d=>d.g==='p'?600:400).attr('fill','var(--ink)').attr('paint-order','stroke').attr('stroke','var(--surface)').attr('stroke-width',3).text(d=>d.id);
+  const color={p:'var(--accent)',d:'var(--s2)',v:'var(--s5)',a:'var(--s3)',i:'var(--s4)',g:'var(--muted)'};
+  const N=[];const L=[];
+  const add=(id,g,hub,c)=>N.push({id,g,hub:!!hub,c:c||g});
+  const ln=(s,...ts)=>ts.forEach(t=>L.push({source:s,target:t}));
+  ['Agricultura','Tesorería aeronáutica','Sentimiento catering','Agente de empleo','Extractor de comentarios','Ranking TFM','BI'].forEach(x=>add(x,'p',1));
+  add('SQL','d',1); add('NoSQL','d',1,'n'); add('Visualización','v',1); add('Automatización','a',1); add('Machine Learning','i',1,'ml'); add('Deep Learning','i',1,'dl'); add('IA generativa','i',1); add('Gobernanza de datos','g',1);
+  ['Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia','Snowflake','SAP HANA','SQL Server'].forEach(x=>add(x,'d'));
+  ['MongoDB','JSON','Cassandra','Neo4j (grafos)'].forEach(x=>add(x,'d',0,'n'));
+  ['Power BI','Tableau','Looker','Adobe Analytics','D3.js','Streamlit','SCImago Graphica'].forEach(x=>add(x,'v'));
+  ['Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'].forEach(x=>add(x,'a'));
+  ['Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'].forEach(x=>add(x,'i',0,'ml'));
+  ['Redes neuronales','Visión por computadora','Autoencoders variacionales'].forEach(x=>add(x,'i',0,'dl'));
+  ['LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea'].forEach(x=>add(x,'i'));
+  ln('SQL','Modelo relacional','Snowflake','SAP HANA','SQL Server'); ln('Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia');
+  ln('NoSQL','MongoDB','JSON','Cassandra','Neo4j (grafos)'); ln('MongoDB','JSON'); ln('Neo4j (grafos)','JSON');
+  ln('Visualización','Power BI','Tableau','Looker','Adobe Analytics','D3.js','Streamlit','SCImago Graphica');
+  ln('Automatización','Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'); ln('Power Apps','Power Automate');
+  ln('Machine Learning','Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'); ln('Árboles de decisión','Random Forest');
+  ln('Deep Learning','Redes neuronales','Visión por computadora','Autoencoders variacionales'); ln('Machine Learning','Deep Learning'); ln('Deep Learning','IA generativa');
+  ln('IA generativa','LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea'); ln('RAG','Embeddings'); ln('Orquestadores','LangChain');
+  ln('Gobernanza de datos','SQL','NoSQL');
+  ln('Agricultura','Python','SQL','Telegram API');
+  ln('Tesorería aeronáutica','Python','SAP HANA','Power Automate','Power Apps','Power BI','Gobernanza de datos');
+  ln('Sentimiento catering','LangChain','LLMs locales','LLMs en línea','JSON','Orquestadores');
+  ln('Agente de empleo','Selenium','BeautifulSoup','Telegram API','MongoDB','Embeddings','Agentes de IA');
+  ln('Extractor de comentarios','Playwright','JSON','LLMs en línea','Python');
+  ln('Ranking TFM','Python','SQL Server','Power BI','BeautifulSoup');
+  ln('BI','Snowflake','Modelo relacional','Looker','Adobe Analytics','Streamlit','Gobernanza de datos');
+  const W=900,H=1080, svg=d3.select('#graph');
+  const cx={p:[400,500],d:[130,250],n:[420,110],g:[300,380],v:[130,860],a:[400,950],i:[680,190],ml:[660,600],dl:[660,900]};
+  const sim=d3.forceSimulation(N).force('link',d3.forceLink(L).id(d=>d.id).distance(d=>d.source.hub&&d.target.hub?120:70).strength(.25))
+    .force('charge',d3.forceManyBody().strength(d=>d.hub?-500:-220)).force('collide',d3.forceCollide(d=>d.hub?58:36).iterations(4))
+    .force('x',d3.forceX(d=>cx[d.c][0]).strength(.35)).force('y',d3.forceY(d=>cx[d.c][1]).strength(.35))
+    .force('bx',()=>N.forEach(n=>{n.x=Math.max(20,Math.min(W-200,n.x)); n.y=Math.max(24,Math.min(H-24,n.y));})).stop();
+  for(let i=0;i<700;i++) sim.tick();
+  const lw=n=>n.id.length*(n.hub?7.8:6.8)+(n.hub?16:12);
+  for(let k=0;k<200;k++){let moved=false;
+    for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){const A=N[i],B=N[j];
+      const ox=Math.min(A.x+lw(A),B.x+lw(B))-Math.max(A.x-8,B.x-8), dy=B.y-A.y;
+      if(ox>0&&Math.abs(dy)<18){const push=(18-Math.abs(dy))/2+.5, sgn=dy>=0?1:-1; A.y-=sgn*push; B.y+=sgn*push; moved=true;}}
+    N.forEach(n=>{n.y=Math.max(24,Math.min(H-24,n.y));}); if(!moved) break;}
+  const link=svg.append('g').selectAll('line').data(L).join('line').attr('stroke','var(--rule)').attr('stroke-width',1.3);
+  const node=svg.append('g').selectAll('g').data(N).join('g').style('cursor','grab').attr('tabindex',0);
+  node.append('circle').attr('r',d=>d.g==='p'?11:d.hub?9:6).attr('fill',d=>d.hub&&d.g!=='p'?'var(--surface)':color[d.g]).attr('stroke',d=>d.hub&&d.g!=='p'?color[d.g]:'var(--surface)').attr('stroke-width',d=>d.hub&&d.g!=='p'?3:2);
+  node.append('text').attr('x',d=>d.hub?14:10).attr('y',4).attr('font-size',d=>d.hub?12.5:11).attr('font-weight',d=>d.hub?700:400).attr('fill','var(--ink)').attr('paint-order','stroke').attr('stroke','var(--surface)').attr('stroke-width',3).text(d=>d.id);
   function pos(){link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y); node.attr('transform',d=>`translate(${d.x},${d.y})`);}
   pos();
   const nb=n=>new Set(L.filter(l=>l.source===n||l.target===n).flatMap(l=>[l.source.id,l.target.id]));
-  function hi(n){const s=n?nb(n):null; node.attr('opacity',d=>!s||s.has(d.id)?1:.18); link.attr('stroke',l=>n&&(l.source===n||l.target===n)?color[n.g]:'var(--rule)').attr('opacity',l=>!n||l.source===n||l.target===n?1:.15);}
+  function hi(n){const s=n?nb(n):null; node.attr('opacity',d=>!s||s.has(d.id)?1:.15); link.attr('stroke',l=>n&&(l.source===n||l.target===n)?color[n.g]:'var(--rule)').attr('opacity',l=>!n||l.source===n||l.target===n?1:.12);}
   node.on('mouseenter',(e,d)=>hi(d)).on('mouseleave',()=>hi(null)).on('focus',(e,d)=>hi(d)).on('blur',()=>hi(null));
   node.call(d3.drag().on('start',function(e,d){d3.select(this).style('cursor','grabbing');hi(d)}).on('drag',(e,d)=>{d.x=Math.max(20,Math.min(W-20,e.x));d.y=Math.max(20,Math.min(H-20,e.y));pos();}).on('end',function(){d3.select(this).style('cursor','grab')}));
 })();
@@ -874,7 +1009,6 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
     {y:2022,t:'Build Basic Generative Adversarial Networks (GANs)',o:'DeepLearning.AI · Coursera',k:'C'},
     {y:2021,t:'Deep Learning Specialization (5 cursos)',o:'DeepLearning.AI · Coursera',k:'C'},
     {y:2020,t:'Machine Learning',o:'Stanford University · Coursera',k:'C'},
-    {y:2020,t:'Diplomado en Inteligencia Artificial',o:'Universidad Nacional de Colombia',k:'C'},
     {y:2019,t:'Deep Learning e Inteligencia Artificial',o:'Universidad Nacional de Colombia',k:'C'},
     {y:2018,t:'Ingeniero de Sonido',o:'Universidad de San Buenaventura, Bogotá',k:'T'}
   ];
