@@ -371,6 +371,32 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
 
   <article class="case">
     <div class="txt">
+      <p class="lbl">Tesorería · Delta Air Lines (BSSC)</p>
+      <h3>Carga de FB60 a SAP 95% más rápida</h3>
+      <p>En refunds, las evidencias de cada caso (formato FB60) llegaban en archivos de Excel muy pesados, sobre todo desde APAC: cada uno traía más de 400.000 bancos. La directora del área los cargaba en SAP HANA, y cuando llegaban muchos casos el proceso se volvía muy lento.</p>
+      <ul>
+        <li>Python abre cada archivo y extrae solo la primera hoja, la que contiene la FB60.</li>
+        <li>Crea un Excel liviano con el nombre de esa hoja y lo replica tantas veces como FB60 se generen en el día.</li>
+        <li>SAP HANA recibe solo lo necesario, sin los cientos de miles de filas de bancos.</li>
+      </ul>
+      <p class="value"><b>Resultado:</b> 95% menos tiempo de carga de las FB60 en SAP.</p>
+    </div>
+    <div class="inst">
+      <h3>Cómo funciona la automatización</h3>
+      <ol class="flow" aria-label="Flujo de la automatización" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <li><b>Excel pesado</b><span>FB60 + más de 400.000 bancos</span></li>
+        <li class="db"><b>Python</b><span>extrae la hoja de la FB60</span></li>
+        <li><b>Excel liviano</b><span>uno por cada FB60 del día</span></li>
+        <li class="hot"><b>SAP HANA</b><span>carga rápida</span></li>
+      </ol>
+      <h3 style="margin-top:20px">Tiempo de carga de las FB60 en SAP (índice, antes = 100)</h3>
+      <p class="sub">Antes y después de la automatización</p>
+      <svg id="tm" class="chart" viewBox="0 0 560 130" role="img" aria-label="El tiempo de carga bajó de 100 a 5"></svg>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt">
       <p class="lbl">Experiencia de cliente · Delta Air Lines</p>
       <h3>Análisis de sentimiento avanzado con un ensamble de modelos</h3>
       <p>Para más de 20.000 comentarios de catering, cinco modelos preentrenados, orquestados con LangChain, votan por mayoría. Los casos ambiguos (ironía, sarcasmo, empates) pasan a un LLM con reglas estrictas que separa el análisis por frase e ingrediente.</p>
@@ -380,7 +406,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>Estructura de palabras clave para agrupar los comentarios por tema y por producto.</li>
         <li>Más preciso que el análisis léxico tradicional, que clasifica casi todo como neutro.</li>
       </ul>
-      <p class="value"><b>Resultado:</b> más de 20.000 comentarios clasificados con detalle por frase y producto, listos para decidir qué mejorar.</p>
+      <p class="value"><b>Resultado:</b> más de 20.000 comentarios clasificados por frase y por producto, convertidos en información clara para decidir qué ajustar en el menú y en el servicio.</p>
     </div>
     <div class="inst">
       <h3>Votos del ensamble por comentario <span class="tagd">ejemplo</span></h3>
@@ -508,7 +534,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>Hallazgo: además de goles y asistencias, pesan las acciones repetitivas, como tiros, pases cortos, creación de tiros y control de balón.</li>
         <li>El modelo coincidió con la realidad: Vinícius y Benzema, primeros en España en 2021-2022, año del Balón de Oro de Benzema; Rafael Leão en el top 10 de Italia el año en que el Milan fue campeón.</li>
       </ul>
-      <p class="value"><b>Valor:</b> un método reutilizable para detectar talento con datos, no solo con intuición.</p>
+      <p class="value"><b>Valor:</b> un método reutilizable para detectar talento con datos, no solo con intuición. Por ejemplo, en Italia 2022-2023 el primero del ranking fue Khvicha Kvaratskhelia, del Napoli. En enero de 2025 fichó por el PSG, que después ganó la Champions League dos veces seguidas (2025 y 2026). El modelo lo señaló dos años antes.</p>
       <p><a href="https://github.com/ardilupus/TFM/blob/main/TFM_Analisis_rendimiento_delanteros.pdf" target="_blank" rel="noopener">Leer el TFM completo</a> · <a href="https://github.com/ardilupus/TFM" target="_blank" rel="noopener">Ver los datos en GitHub</a></p>
     </div>
     <div class="inst">
@@ -519,8 +545,9 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       </div>
       <svg id="tfm" class="chart" viewBox="0 0 560 330" role="img" aria-label="Ranking de rendimiento"></svg>
       <h3 style="margin-top:16px" id="tf-name">Componentes del puntaje</h3>
-      <p class="sub">Toque un jugador para ver de dónde sale su puntaje</p>
-      <svg id="tfc" class="chart" viewBox="0 0 560 190" role="img" aria-label="Componentes del puntaje"></svg>
+      <p class="sub">Toque un jugador para ver de dónde sale su puntaje, comparado con el primero del ranking</p>
+      <svg id="tfc" class="chart" viewBox="0 0 560 360" role="img" aria-label="Radar de componentes del puntaje"></svg>
+      <div class="legend"><span><i style="background:var(--accent)"></i>Jugador seleccionado</span><span><i style="background:var(--muted)"></i>Primero del ranking</span></div>
       <h3 style="margin-top:16px">Peso de cada acción en el puntaje (%) <span class="tagd real">datos reales</span></h3>
       <p class="sub">Goles y asistencias cuentan completos (peso 1); el resto se reparte según el aporte de los delanteros</p>
       <svg id="tfw" class="chart" viewBox="0 0 560 420" role="img" aria-label="Peso de cada acción en el ranking"></svg>
@@ -529,15 +556,30 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
 
   <article class="case">
     <div class="txt">
-      <p class="lbl">Gerencia · IA aplicada</p>
-      <h3>IA para gerentes: dónde da valor y quién decide</h3>
-      <p>Formé a más de 150 personas, entre servidores públicos y particulares, en SQL, ciencia de datos e IA generativa en la ESAP. Hoy orquesto hasta 8 modelos de lenguaje, locales y vía API, para convertir datos no estructurados en decisiones. Con gerentes trabajo tres preguntas: qué proceso tiene retorno medible, qué riesgo de datos trae y qué acciones requieren aprobación humana.</p>
-      <p class="value"><b>Valor:</b> adoptar IA con una métrica de negocio y reglas claras, no por moda.</p>
+      <p class="lbl">Formación · ESAP</p>
+      <h3>Datos e IA para servidores públicos, estudiantes y docentes</h3>
+      <p>Creé y dicté el curso de Ciencia de Datos de la ESAP. Formé a más de 150 participantes, entre servidores públicos, estudiantes y docentes, en una ruta práctica: primero consultar datos con SQL, luego analizarlos con Python y al final aplicar ciencia de datos e IA generativa.</p>
+      <ul>
+        <li>Ejercicios con datos reales del sector público.</li>
+        <li>De la consulta a la decisión: cada módulo termina con un análisis que responde una pregunta concreta.</li>
+        <li>IA generativa con criterio: dónde ayuda, qué riesgos de datos trae y qué decisiones requieren revisión humana.</li>
+      </ul>
+      <p class="value"><b>Valor:</b> personas que no programaban terminaron consultando, analizando y presentando datos por su cuenta.</p>
     </div>
     <div class="inst">
-      <h3>Tiempo operativo del proceso de tesorería (índice, antes = 100)</h3>
-      <p class="sub">Resultado de automatizar validaciones y flujos ETL</p>
-      <svg id="tm" class="chart" viewBox="0 0 560 130" role="img" aria-label="El tiempo operativo bajó de 100 a 5"></svg>
+      <h3>Ruta del curso</h3>
+      <p class="sub">Más de 150 participantes · 2022 a 2023</p>
+      <ol class="flow" aria-label="Ruta del curso" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <li><b>SQL</b><span>consultar y cruzar tablas</span></li>
+        <li class="db"><b>Python</b><span>limpiar y analizar con Pandas</span></li>
+        <li><b>Ciencia de datos</b><span>estadística, modelos y visualización</span></li>
+        <li class="hot"><b>IA generativa</b><span>uso responsable en el trabajo</span></li>
+      </ol>
+      <div class="ptable" role="table" aria-label="Datos del curso" style="margin-top:16px">
+        <div role="row"><span>Participantes</span><b>Más de 150</b></div>
+        <div role="row"><span>Perfiles</span><b>Servidores públicos, estudiantes y docentes</b></div>
+        <div role="row"><span>Mi rol</span><b>Creador del curso e instructor</b></div>
+      </div>
     </div>
   </article>
   <article class="case">
@@ -821,7 +863,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 (function(){
   const M=['Modelo 1','Modelo 2','Modelo 3','Modelo 4','Modelo 5'];
   const C=[
-    {q:'"The omelette was great, but the bread was cold."', v:['pos','neg','neu','pos','neg'], esc:'Empate entre positivo y negativo', parts:[['Omelette','positivo','pos'],['Pan (temperatura)','negativo','neg']]},
+    {q:'"The omelette was great, but the chicken salad sandwich was dry."', v:['pos','neg','neu','pos','neg'], esc:'Empate entre positivo y negativo', parts:[['Omelette','positivo','pos'],['Chicken salad sandwich (textura)','negativo','neg']]},
     {q:'"Great, cold coffee again. Just what I wanted."', v:['pos','pos','pos','neu','neg'], esc:'Posible sarcasmo: palabras positivas con una queja repetida', parts:[['Café (temperatura)','negativo','neg'],['Tono','sarcasmo','neg']]},
     {q:'"Loved the omelette, warm and fresh. Great crew."', v:['pos','pos','pos','pos','neu'], esc:null, parts:[]}
   ];
@@ -905,13 +947,28 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   const W=560,l=170,rr=56, svg=d3.select('#tfm'), svc=d3.select('#tfc');
   const sS=document.getElementById('tf-s'), sL=document.getElementById('tf-l');
   let cur=null;
-  function comps(p){
-    svc.selectAll('*').remove(); document.getElementById('tf-name').textContent='Componentes del puntaje de '+p.j;
-    const x=d3.scaleLinear([0,Math.max(35,d3.max(p.c))],[l,W-rr]);
-    T.comp.forEach((k,i)=>{const g=svc.append('g').attr('transform',`translate(0,${6+i*30})`);
-      g.append('text').attr('x',0).attr('y',16).attr('font-size',12).attr('fill','var(--ink)').text(k);
-      g.append('rect').attr('x',l).attr('y',3).attr('height',20).attr('rx',3).attr('width',x(p.c[i])-l).attr('fill','var(--s2)');
-      g.append('text').attr('x',x(p.c[i])+6).attr('y',17).attr('font-size',11.5).attr('fill','var(--ink)').text(f1(p.c[i]));});
+  const R=130, cx=280, cy=178, N=T.comp.length, ang=i=>-Math.PI/2+i*2*Math.PI/N;
+  const pt=(v,i,m)=>[cx+Math.cos(ang(i))*R*v/m, cy+Math.sin(ang(i))*R*v/m];
+  function comps(p, D){
+    document.getElementById('tf-name').textContent='Componentes del puntaje de '+p.j;
+    const m=Math.max(5,d3.max(D,d=>d3.max(d.c)));
+    if(!svc.select('.grid').size()){
+      const g=svc.append('g').attr('class','grid');
+      [0.25,0.5,0.75,1].forEach(f=>g.append('polygon').attr('points',d3.range(N).map(i=>[cx+Math.cos(ang(i))*R*f, cy+Math.sin(ang(i))*R*f].join(',')).join(' ')).attr('fill','none').attr('stroke','var(--rule)'));
+      d3.range(N).forEach(i=>{g.append('line').attr('x1',cx).attr('y1',cy).attr('x2',cx+Math.cos(ang(i))*R).attr('y2',cy+Math.sin(ang(i))*R).attr('stroke','var(--rule)');
+        const lx=cx+Math.cos(ang(i))*(R+22), ly=cy+Math.sin(ang(i))*(R+22);
+        g.append('text').attr('x',lx).attr('y',ly+4).attr('text-anchor',Math.abs(Math.cos(ang(i)))<0.2?'middle':(Math.cos(ang(i))>0?'start':'end')).attr('font-size',11.5).attr('fill','var(--ink)').text(T.comp[i]);});
+      svc.append('path').attr('class','lead').attr('fill','var(--muted)').attr('fill-opacity',.12).attr('stroke','var(--muted)').attr('stroke-dasharray','4 3');
+      svc.append('path').attr('class','sel').attr('fill','var(--accent)').attr('fill-opacity',.22).attr('stroke','var(--accent)').attr('stroke-width',2);
+      svc.append('g').attr('class','vals');
+    }
+    const poly=c=>'M'+c.map((v,i)=>pt(v,i,m).join(',')).join('L')+'Z';
+    const tr=svc.transition().duration(RM?0:500);
+    svc.select('.lead').transition(tr).attr('d',poly(D[0].c));
+    svc.select('.sel').transition(tr).attr('d',poly(p.c));
+    const vals=svc.select('.vals').selectAll('g').data(p.c).join(enter=>{const g=enter.append('g'); g.append('circle').attr('r',3.5).attr('fill','var(--accent)'); g.append('text').attr('font-size',11).attr('font-weight',600).attr('fill','var(--ink)').attr('paint-order','stroke').attr('stroke','var(--surface)').attr('stroke-width',3); return g;});
+    vals.transition(tr).attr('transform',(v,i)=>`translate(${pt(v,i,m).join(',')})`);
+    vals.select('text').attr('x',(v,i)=>Math.cos(ang(i))>0.2?7:(Math.cos(ang(i))<-0.2?-7:0)).attr('y',(v,i)=>Math.sin(ang(i))>0.2?14:-7).attr('text-anchor',(v,i)=>Math.abs(Math.cos(ang(i)))<0.2?'middle':(Math.cos(ang(i))>0?'start':'end')).text(v=>f1(v));
   }
   function draw(){
     const D=T.data[sS.value][sL.value]; svg.selectAll('*').remove();
@@ -922,10 +979,10 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
       g.append('text').attr('x',0).attr('y',26).attr('font-size',10).attr('fill','var(--muted)').text(p.e.length>24?p.e.slice(0,23)+'…':p.e);
       const bar=g.append('rect').attr('x',l).attr('y',4).attr('height',20).attr('rx',3).attr('width',x(p.p)-l).attr('fill',i===0?'var(--accent)':'var(--accent-soft)').attr('stroke','var(--accent)');
       g.append('text').attr('x',x(p.p)+6).attr('y',18).attr('font-size',11.5).attr('fill','var(--ink)').text(f1(p.p));
-      const pick=()=>{svg.selectAll('rect').attr('fill','var(--accent-soft)'); bar.attr('fill','var(--accent)'); comps(p);};
+      const pick=()=>{svg.selectAll('rect').attr('fill','var(--accent-soft)'); bar.attr('fill','var(--accent)'); comps(p,D);};
       g.on('click',pick).on('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
     });
-    comps(D[0]);
+    comps(D[0],D);
   }
   sS.addEventListener('change',draw); sL.addEventListener('change',draw); draw();
 })();
@@ -987,7 +1044,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 
 /* time index */
 (function(){
-  const data=[{k:'Antes de automatizar',v:100},{k:'Después de automatizar',v:5}];
+  const data=[{k:'Antes',v:100},{k:'Después',v:5}];
   const W=560,l=170,rr=50, x=d3.scaleLinear([0,100],[l,W-rr]), svg=d3.select('#tm');
   const g=svg.selectAll('g').data(data).join('g').attr('transform',(d,i)=>`translate(0,${18+i*52})`);
   g.append('text').attr('x',0).attr('y',22).attr('font-size',12).attr('fill','var(--ink)').text(d=>d.k);
