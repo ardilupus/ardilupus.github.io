@@ -148,6 +148,13 @@ svg text{font-family:var(--mono)}
 .ptable>div:last-child{border-bottom:0}
 .ptable span{color:var(--muted);font:400 .78rem var(--mono);text-transform:uppercase;letter-spacing:.04em}
 .ptable b{font-weight:600}
+.norm{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.norm .raw{display:grid;gap:4px;flex:1;min-width:180px}
+.norm .raw span{font:400 .78rem var(--mono);border:1px dashed var(--rule);border-radius:6px;padding:4px 8px;color:var(--muted)}
+.norm .arrow{font:600 1.2rem var(--mono);color:var(--accent)}
+.norm .clean{border:1.5px solid var(--ok);border-radius:8px;padding:10px 12px;min-width:160px}
+.norm .clean small{display:block;font:500 .7rem var(--mono);color:var(--ok);text-transform:uppercase;letter-spacing:.06em}
+.norm .clean b{font-size:.95rem}
 .batches{display:grid;grid-template-columns:repeat(40,minmax(0,1fr));gap:2px;margin-top:12px}
 .batches i{display:block;aspect-ratio:1;border-radius:2px;background:var(--rule)}
 .batches i.on{background:var(--accent)}
@@ -229,6 +236,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <p class="lead">Ingeniero y MSc. en Visual Analytics y Big Data. Construyo pipelines, tableros y sistemas de IA que encuentran anomalías a tiempo: en un cultivo, en una tesorería o en miles de comentarios de clientes.</p>
     <div class="links">
       <a class="btn pri" href="#casos">Ver casos</a>
+      <a class="btn" href="https://ardilupus.github.io/cv/Andres_Ardila_CV_ES.pdf" target="_blank" rel="noopener">Hoja de vida (ES)</a>
+      <a class="btn" href="https://ardilupus.github.io/cv/Andres_Ardila_Resume_EN.pdf" target="_blank" rel="noopener">Resume (EN)</a>
       <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo-893984a7/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
     </div>
@@ -251,7 +260,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
   <div class="in">
     <p>Ingeniero y analista de datos con MSc. en Análisis y Visualización de Datos Masivos (Visual Analytics &amp; Big Data), especializado en inteligencia de negocios, automatización, calidad de datos y optimización de procesos en entornos corporativos de alto volumen transaccional y en marketing para marcas multinacionales. Hago de puente entre áreas operativas, equipos de ingeniería y clientes para generar mejoras medibles y sostenibles.</p>
     <p>Más de 3 años diseñando pipelines de automatización y procesos ETL en Python: validación, transformación y control de más de 1 millón de registros bancarios, lógicas de integridad multinivel en SAP HANA y flujos con Power Platform para operaciones globales con reglas bancarias de más de 50 países.</p>
-    <p>Hoy, como Business Analyst de BI, migro dashboards a Snowflake, diseño modelos de gobernanza de datos y relacionales, y construyo proyecciones estadísticas para marcas como Novo Nordisk, Rimax y Rayovac. Desarrollo soluciones de IA generativa con LangChain, RAG y embeddings, orquestando hasta 8 modelos de lenguaje locales (Ollama) y vía API (Gemini, OpenAI, Claude).</p>
+    <p>Hoy, como Business Analyst de BI, migro dashboards a Snowflake, diseño modelos de gobernanza de datos y relacionales, y construyo proyecciones estadísticas para marcas como Novo Nordisk, DKT, Rimax, Rayovac, entre otras. Desarrollo soluciones de IA generativa con LangChain, RAG y embeddings, orquestando hasta 8 modelos de lenguaje locales (Ollama) y vía API (Gemini, OpenAI, Claude).</p>
     <p><b>Datos estructurados y no estructurados.</b> Trabajo con modelos relacionales (estrella y copo de nieve) y con bases NoSQL: documentos JSON en MongoDB para comentarios y ofertas de empleo, y grafos en Neo4j.</p>
     <div class="pills"><span>Python avanzado</span><span>SQL y Snowflake</span><span>NoSQL · MongoDB · JSON</span><span>Neo4j</span><span>LangChain · RAG</span><span>Power Platform</span><span>Gobierno del dato</span><span>Visualización D3</span></div>
   </div>
@@ -334,6 +343,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>Power Apps no carga más de 5.000 registros a la vez: Power Automate los sube por lotes con paginación y validaciones, y parte en bloques para no superar el límite de 100.000 que generaba rechazos.</li>
         <li>Regiones LATAM, EMEA y APAC (con India), cada país con sus campos obligatorios y su forma de identificar el banco: SWIFT, IBAN o código local.</li>
         <li>Cada mes, Python compara SAP con la lista, alerta los bancos nuevos y genera un archivo de importación con solo esos cambios.</li>
+        <li>Normalización de datos: un mismo banco aparecía con varios nombres (por ejemplo, «Itaú Bank», «Itaú Unibanco S.A.» o «Itaú Bank São Paulo»). Con la Bank Key como llave, cada banco quedó con un solo nombre normalizado.</li>
+        <li>Cobertura de todos los países de LATAM, EMEA y APAC donde opera la aerolínea, excepto los que tienen restricciones comerciales.</li>
         <li>Los usuarios tienen acceso de solo lectura: filtran y buscan, pero no pueden editar ni borrar bancos.</li>
       </ul>
       <p class="value"><b>Resultado:</b> se eliminaron el Excel y sus errores de dígitos, y la búsqueda del banco correcto pasó a tomar segundos.</p>
@@ -345,6 +356,12 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       <div class="tabs sm" role="group" aria-label="Países" id="bk-tabs"></div>
       <div class="steps" id="bk-steps"></div>
       <div id="bk-extra"></div>
+      <h3 style="margin-top:20px">Normalización de nombres por Bank Key <span class="tagd">ejemplo</span></h3>
+      <div class="norm" aria-label="Ejemplo de normalización">
+        <div class="raw"><span>Itaú Bank</span><span>Itaú Unibanco S.A.</span><span>ITAU BANK SAO PAULO</span><span>Banco Itaú S.A.</span></div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="clean"><small>Bank Key 341</small><b>Itaú Unibanco S.A.</b></div>
+      </div>
       <h3 style="margin-top:20px">Carga de 1.200.000 bancos en lotes de 5.000</h3>
       <p class="sub">Cada cuadro es un lote. En naranja, el corte de cada bloque de 100.000</p>
       <div class="batches" id="bk-batches" aria-label="240 lotes de carga"></div>
@@ -358,10 +375,12 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       <h3>Análisis de sentimiento avanzado con un ensamble de modelos</h3>
       <p>Para más de 20.000 comentarios de catering, cinco modelos preentrenados, orquestados con LangChain, votan por mayoría. Los casos ambiguos (ironía, sarcasmo, empates) pasan a un LLM con reglas estrictas que separa el análisis por frase e ingrediente.</p>
       <ul>
-        <li>El análisis léxico tradicional clasifica casi todo como neutro.</li>
-        <li>El ensamble dice qué plato falla y por qué. Los más mencionados eran el omelette y el chicken salad sandwich.</li>
+        <li>Transformación de los comentarios de un Excel plano a documentos JSON (NoSQL), separados por frase dentro de cada comentario.</li>
+        <li>Sentimiento por frase y sentimiento general de cada comentario.</li>
+        <li>Estructura de palabras clave para agrupar los comentarios por tema y por producto.</li>
+        <li>Más preciso que el análisis léxico tradicional, que clasifica casi todo como neutro.</li>
       </ul>
-      <p class="insight"><b>Hallazgo:</b> el chicken salad sandwich recibía quejas por dos razones opuestas: cuando no estaba disponible y cuando sabía insípido. Los comentarios de «insípido» se asociaban con el origen del pollo: el de proveedores latinoamericanos se describía con más sabor que el de España. La receta era la misma; cambiaba el insumo.</p>
+      <p class="value"><b>Resultado:</b> más de 20.000 comentarios clasificados con detalle por frase y producto, listos para decidir qué mejorar.</p>
     </div>
     <div class="inst">
       <h3>Votos del ensamble por comentario <span class="tagd">ejemplo</span></h3>
@@ -463,6 +482,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
         <li>Próximo: Facebook y TikTok con el mismo modelo.</li>
       </ul>
       <p class="value"><b>Valor:</b> un engagement rate de 10% no dice nada si no se sabe de qué está hecho: elogios, quejas, preguntas o intención de compra.</p>
+      <p><a href="https://github.com/ardilupus/extractor-comentarios" target="_blank" rel="noopener">Ver el código en GitHub</a></p>
     </div>
     <div class="inst">
       <h3>Sentimiento de los comentarios de una publicación (%) <span class="tagd">simulado</span></h3>
@@ -481,12 +501,15 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <div class="txt">
       <p class="lbl">Investigación · Trabajo Fin de Máster, UNIR</p>
       <h3>Ranking de rendimiento de delanteros en Europa</h3>
-      <p>Hice web scraping de FBref para todos los jugadores de las ligas de España, Italia e Inglaterra, elegidas por el ranking de ligas europeas, en las temporadas 2021-2022 y 2022-2023. Tras un análisis exploratorio de más de 100 campos, quité lo que no dice nada de un delantero (como saques de banda) y separé por tipo: 9 de punta, segunda punta, extremos y mediapunta.</p>
+      <p>Con Francisco Cendón revisamos 20 fuentes de datos y elegimos FBref. Extrajimos siete tablas por jugador de las ligas de España, Italia e Inglaterra, temporadas 2021-2022 y 2022-2023, con macros de Excel (VBA), pausas y VPN para no afectar el sitio. Todo quedó en SQL Server, junto con los salarios de cada equipo.</p>
       <ul>
-        <li>Puntaje con pesos propios: goles, asistencias, regates, creación de tiros, pases progresivos, tarjetas y más.</li>
+        <li>Análisis exploratorio de 93 campos en Python (pandas, seaborn, matplotlib); quedaron los 20 donde el delantero aporta más que el resto.</li>
+        <li>Ranking en SQL Server: el peso de cada acción sale de la mediana del aporte de los delanteros, ajustado por minutos jugados y por un índice de salarios del equipo (de 1 a 2) como factor de dificultad.</li>
+        <li>Hallazgo: además de goles y asistencias, pesan las acciones repetitivas, como tiros, pases cortos, creación de tiros y control de balón.</li>
         <li>El modelo coincidió con la realidad: Vinícius y Benzema, primeros en España en 2021-2022, año del Balón de Oro de Benzema; Rafael Leão en el top 10 de Italia el año en que el Milan fue campeón.</li>
       </ul>
       <p class="value"><b>Valor:</b> un método reutilizable para detectar talento con datos, no solo con intuición.</p>
+      <p><a href="https://github.com/ardilupus/TFM/blob/main/TFM_Analisis_rendimiento_delanteros.pdf" target="_blank" rel="noopener">Leer el TFM completo</a> · <a href="https://github.com/ardilupus/TFM" target="_blank" rel="noopener">Ver los datos en GitHub</a></p>
     </div>
     <div class="inst">
       <h3>Puntaje de rendimiento de los 10 mejores <span class="tagd real">datos reales</span></h3>
@@ -498,6 +521,9 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
       <h3 style="margin-top:16px" id="tf-name">Componentes del puntaje</h3>
       <p class="sub">Toque un jugador para ver de dónde sale su puntaje</p>
       <svg id="tfc" class="chart" viewBox="0 0 560 190" role="img" aria-label="Componentes del puntaje"></svg>
+      <h3 style="margin-top:16px">Peso de cada acción en el puntaje (%) <span class="tagd real">datos reales</span></h3>
+      <p class="sub">Goles y asistencias cuentan completos (peso 1); el resto se reparte según el aporte de los delanteros</p>
+      <svg id="tfw" class="chart" viewBox="0 0 560 420" role="img" aria-label="Peso de cada acción en el ranking"></svg>
     </div>
   </article>
 
@@ -564,7 +590,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     <div class="job" id="j-asylum"><p class="when">07/2026 – hoy</p><div>
       <h3>Business Analyst – BI</h3><p class="org">Asylum marketing</p>
       <ul>
-        <li>Análisis de datos e inteligencia de negocios para Novo Nordisk, Rimax, Rayovac y otras marcas.</li>
+        <li>Análisis de datos e inteligencia de negocios para Novo Nordisk, DKT, Rimax, Rayovac, entre otras marcas.</li>
         <li>Migración de dashboards a Snowflake (capas bronce, silver y gold), construidos como código agéntico.</li>
         <li>Pipelines en Python desde imágenes y desde Adobe Analytics hacia Google Sheets, Excel y Snowflake.</li>
         <li>Proyección de influencers para Novo Nordisk y proyección anual de Rayovac cruzando Fanpage Karma y Windsor AI.</li>
@@ -595,8 +621,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     </div></div>
     <div class="job" id="j-tfm"><p class="when">01/2024 – 09/2024</p><div>
       <h3>Investigador – Análisis de rendimiento deportivo</h3><p class="org">Trabajo Fin de Máster, UNIR</p>
-      <ul><li>Ranking de delanteros de las ligas de España, Italia e Inglaterra con scraping de FBref, ETL y modelado estadístico.</li></ul>
-      <p class="tech">Python · SQL Server · Power BI · GitHub</p>
+      <ul><li>Ranking de delanteros de las ligas de España, Italia e Inglaterra: scraping de FBref, 93 campos analizados, ranking ponderado en SQL Server. Con Francisco Cendón Sosa.</li></ul>
+      <p class="tech">Excel VBA · SQL Server · Python (pandas, seaborn, matplotlib) · Google Colab · GitHub</p>
     </div></div>
     <div class="job" id="j-esap"><p class="when">2022 – 2023</p><div>
       <h3>Instructor y creador del curso de Ciencia de Datos</h3><p class="org">ESAP</p>
@@ -616,9 +642,9 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
 <section id="habilidades">
   <div class="shead"><p class="lbl">Habilidades</p><h2>Con qué trabajo</h2></div>
   <div class="skills">
-    <div><h3>Programación y datos</h3><div class="chips"><span>Python avanzado</span><span>Pandas</span><span>NumPy</span><span>DuckDB</span><span>SQL avanzado</span><span>Snowflake</span><span>ETL</span><span>APIs</span></div></div>
+    <div><h3>Programación y datos</h3><div class="chips"><span>Python avanzado</span><span>Pandas</span><span>NumPy</span><span>DuckDB</span><span>SQL avanzado</span><span>SQL Server</span><span>Snowflake</span><span>ETL</span><span>APIs</span></div></div>
     <div><h3>Datos estructurados y no estructurados</h3><div class="chips"><span>NoSQL</span><span>MongoDB</span><span>JSON</span><span>Neo4j</span><span>Modelo estrella</span><span>Copo de nieve</span><span>Gobierno del dato</span></div></div>
-    <div><h3>Extracción y automatización</h3><div class="chips"><span>Playwright</span><span>Selenium</span><span>BeautifulSoup</span><span>Power Automate</span><span>Power Apps</span><span>SAP HANA</span><span>Telegram API</span></div></div>
+    <div><h3>Extracción y automatización</h3><div class="chips"><span>Playwright</span><span>Selenium</span><span>BeautifulSoup</span><span>Power Automate</span><span>Power Apps</span><span>SAP HANA</span><span>Telegram API</span><span>Excel VBA</span></div></div>
     <div><h3>IA generativa</h3><div class="chips"><span>LangChain</span><span>RAG</span><span>Embeddings</span><span>Ollama</span><span>Gemini</span><span>OpenAI</span><span>Claude</span><span>NLP</span></div></div>
     <div><h3>Visualización y BI</h3><div class="chips"><span>Power BI</span><span>Tableau</span><span>Looker</span><span>Adobe Analytics</span><span>Streamlit</span><span>D3.js</span><span>SCImago Graphica</span></div></div>
     <div><h3>Análisis</h3><div class="chips"><span>Detección de anomalías</span><span>Control de fraude</span><span>Calidad de datos</span><span>Modelado de KPIs</span><span>Proyecciones estadísticas</span><span>Machine Learning</span><span>Deep Learning</span></div></div>
@@ -651,6 +677,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--muted);border-top:1px sol
     </div>
     <div class="links">
       <button class="btn pri" id="copy" type="button">Copiar correo</button>
+      <a class="btn" href="https://ardilupus.github.io/cv/Andres_Ardila_CV_ES.pdf" target="_blank" rel="noopener">Hoja de vida (ES)</a>
+      <a class="btn" href="https://ardilupus.github.io/cv/Andres_Ardila_Resume_EN.pdf" target="_blank" rel="noopener">Resume (EN)</a>
       <a class="btn" href="https://wa.me/573017685097" target="_blank" rel="noopener">WhatsApp</a>
       <a class="btn" href="https://www.linkedin.com/in/andr%C3%A9s-mauricio-ardila-fajardo-893984a7/" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn" href="https://github.com/ardilupus" target="_blank" rel="noopener">GitHub</a>
@@ -793,8 +821,8 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 (function(){
   const M=['Modelo 1','Modelo 2','Modelo 3','Modelo 4','Modelo 5'];
   const C=[
-    {q:'"The omelette was great, but the chicken salad sandwich had no flavor at all."', v:['pos','neg','neu','pos','neg'], esc:'Empate entre positivo y negativo', parts:[['Omelette','positivo','pos'],['Chicken salad sandwich (sabor)','negativo','neg']]},
-    {q:'"Great, no chicken salad sandwich again. Just what I wanted."', v:['pos','pos','pos','neu','neg'], esc:'Posible sarcasmo: palabras positivas con una queja repetida', parts:[['Chicken salad sandwich (disponibilidad)','negativo','neg'],['Tono','sarcasmo','neg']]},
+    {q:'"The omelette was great, but the bread was cold."', v:['pos','neg','neu','pos','neg'], esc:'Empate entre positivo y negativo', parts:[['Omelette','positivo','pos'],['Pan (temperatura)','negativo','neg']]},
+    {q:'"Great, cold coffee again. Just what I wanted."', v:['pos','pos','pos','neu','neg'], esc:'Posible sarcasmo: palabras positivas con una queja repetida', parts:[['Café (temperatura)','negativo','neg'],['Tono','sarcasmo','neg']]},
     {q:'"Loved the omelette, warm and fresh. Great crew."', v:['pos','pos','pos','pos','neu'], esc:null, parts:[]}
   ];
   const lab={pos:'positivo',neg:'negativo',neu:'neutro'};
@@ -946,6 +974,17 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   b.forEach((x,i)=>x.addEventListener('click',()=>show(i))); show(0);
 })();
 
+
+/* TFM weights (real, Tabla 17) */
+(function(){
+  const D=[['Tiros',10.83],['Regates',8.58],['Acciones de creación de goles',8.29],['Pases en profundidad',7.93],['Control de balón progresivo',7.73],['Acciones de creación de tiros',7.51],['Faltas recibidas',7.38],['Duelos',5.10],['Bloqueos',4.62],['Pases progresivos',4.44],['Control de balón',4.38],['Pases cortos',4.28],['Balones recuperados',4.18],['Derribos con posesión',3.96],['Pases totales',3.38],['Intercepciones',2.68],['Pases medios',2.54],['Pases largos',2.21]];
+  const W=560,l=210,rr=50, x=d3.scaleLinear([0,11],[l,W-rr]), svg=d3.select('#tfw');
+  D.forEach((d,i)=>{const g=svg.append('g').attr('transform',`translate(0,${4+i*23})`);
+    g.append('text').attr('x',0).attr('y',14).attr('font-size',11.5).attr('fill','var(--ink)').text(d[0]);
+    g.append('rect').attr('x',l).attr('y',3).attr('height',16).attr('rx',3).attr('width',x(d[1])-l).attr('fill',i<3?'var(--accent)':'var(--accent-soft)').attr('stroke','var(--accent)');
+    g.append('text').attr('x',x(d[1])+6).attr('y',15).attr('font-size',11).attr('fill','var(--ink)').text(f1(d[1])+'%');});
+})();
+
 /* time index */
 (function(){
   const data=[{k:'Antes de automatizar',v:100},{k:'Después de automatizar',v:5}];
@@ -960,7 +999,7 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
 (function(){
   const now=new Date(2026,10,1);
   const J=[
-    {id:'j-asylum',t:'Business Analyst – BI',o:'Asylum marketing',a:new Date(2026,6,1),b:now,k:'Empleo',d:['BI para Novo Nordisk, Rimax y Rayovac','Migración de dashboards a Snowflake','Gobernanza de datos y proyecciones']},
+    {id:'j-asylum',t:'Business Analyst – BI',o:'Asylum marketing',a:new Date(2026,6,1),b:now,k:'Empleo',d:['BI para Novo Nordisk, DKT, Rimax, Rayovac, entre otras','Migración de dashboards a Snowflake','Gobernanza de datos y proyecciones']},
     {id:'j-delta',t:'Analista de Datos',o:'BSSC · Delta Air Lines',a:new Date(2025,3,1),b:new Date(2026,2,31),k:'Empleo',d:['Validación multinivel: 200+ casos diarios','App de 1,2 millones de bancos','45 intentos de fraude detectados a tiempo','Fotos con IA para 200 personas']},
     {id:'j-agente',t:'Agente de búsqueda de empleo',o:'Proyecto propio',a:new Date(2025,2,1),b:now,k:'Proyecto',d:['5 fuentes, puntaje y alertas por Telegram','7.600+ ofertas filtradas']},
     {id:'j-scraper',t:'Extractor de comentarios',o:'Proyecto propio',a:new Date(2026,0,1),b:now,k:'Proyecto',d:['Playwright, JSON y análisis agéntico']},
@@ -1004,25 +1043,25 @@ const axisStyle=g=>{g.selectAll('text').attr('fill','var(--muted)');g.selectAll(
   ['Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia','Snowflake','SAP HANA','SQL Server'].forEach(x=>add(x,'d'));
   ['MongoDB','JSON','Cassandra','Neo4j (grafos)'].forEach(x=>add(x,'d',0,'n'));
   ['Power BI','Tableau','Looker','Adobe Analytics','D3.js','Streamlit','SCImago Graphica'].forEach(x=>add(x,'v'));
-  ['Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'].forEach(x=>add(x,'a'));
+  ['Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA','Excel VBA'].forEach(x=>add(x,'a'));
   ['Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'].forEach(x=>add(x,'i',0,'ml'));
   ['Redes neuronales','Visión por computadora','Autoencoders variacionales'].forEach(x=>add(x,'i',0,'dl'));
   ['LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea','Generación de imágenes','Ingeniería de prompts'].forEach(x=>add(x,'i'));
   ln('SQL','Modelo relacional','Snowflake','SAP HANA','SQL Server'); ln('Modelo relacional','Modelo estrella','Copo de nieve','Modelo galaxia');
   ln('NoSQL','MongoDB','JSON','Cassandra','Neo4j (grafos)'); ln('MongoDB','JSON'); ln('Neo4j (grafos)','JSON');
   ln('Visualización','Power BI','Tableau','Looker','Adobe Analytics','D3.js','Streamlit','SCImago Graphica');
-  ln('Automatización','Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA'); ln('Power Apps','Power Automate');
+  ln('Automatización','Python','Selenium','Playwright','BeautifulSoup','Power Automate','Power Apps','Telegram API','RPA','Excel VBA'); ln('Power Apps','Power Automate'); ln('BeautifulSoup','Python'); ln('Selenium','Python'); ln('Playwright','Python');
   ln('Machine Learning','Regresión lineal','Regresión logística','Regresión polinomial','Árboles de decisión','Random Forest','Clustering'); ln('Árboles de decisión','Random Forest');
   ln('Deep Learning','Redes neuronales','Visión por computadora','Autoencoders variacionales'); ln('Machine Learning','Deep Learning'); ln('Deep Learning','IA generativa');
   ln('IA generativa','LangChain','Embeddings','RAG','Agentes de IA','Orquestadores','LLMs locales','LLMs en línea','Generación de imágenes','Ingeniería de prompts');
   ln('Fotos con IA','Generación de imágenes','Ingeniería de prompts','LLMs en línea'); ln('RAG','Embeddings'); ln('Orquestadores','LangChain');
-  ln('Gobernanza de datos','SQL','NoSQL');
+  ln('Gobernanza de datos','SQL','NoSQL','Modelo relacional');
   ln('Agricultura','Python','SQL','Telegram API');
   ln('Tesorería aeronáutica','Python','SAP HANA','Power Automate','Power Apps','Power BI','Gobernanza de datos');
   ln('Sentimiento catering','LangChain','LLMs locales','LLMs en línea','JSON','Orquestadores');
   ln('Agente de empleo','Selenium','BeautifulSoup','Telegram API','MongoDB','Embeddings','Agentes de IA');
   ln('Extractor de comentarios','Playwright','JSON','LLMs en línea','Python');
-  ln('Ranking TFM','Python','SQL Server','Power BI','BeautifulSoup');
+  ln('Ranking TFM','Python','SQL Server','Excel VBA','Gobernanza de datos');
   ln('BI','Snowflake','Modelo relacional','Looker','Adobe Analytics','Streamlit','Gobernanza de datos');
   const W=900,H=1080, svg=d3.select('#graph');
   const cx={p:[400,500],d:[130,250],n:[420,110],g:[300,380],v:[130,860],a:[400,950],i:[680,190],ml:[660,600],dl:[660,900]};
